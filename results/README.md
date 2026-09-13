@@ -1,8 +1,8 @@
-# Listener preference results
+# Benchmark results
 
 For the evaluated US-English scripts, voices, and listeners, SupportBench supports a mean paired preference for Rime over each of the four configured competitors. ContentBench supports a mean paired preference for Rime over Cartesia and OpenAI, and for Deepgram and ElevenLabs over Rime. These are separate benchmark results, not an overall provider ranking.
 
-## Primary results
+## SupportBench and ContentBench
 
 Scores run from -2 to +2. Positive differences favor Rime; negative differences favor the competitor. Each row compares Rime Coda with the clementine voice against the configuration named below. Exact voice IDs and API controls are in the [frozen provider settings](../configs/provider_configs.json).
 
@@ -36,8 +36,17 @@ These tasks measure one overall contextual preference judgment. They do not sepa
 
 The generated reports also contain descriptive item win/tie/loss counts. Those are exploratory summaries of item means, not independent listener votes or provider rankings. AlphaBench is a separate qualitative task and does not enter these comparisons.
 
+## AlphaBench qualitative results
+
+AlphaBench main covers 580 scripts rendered by five configured providers: 2,900 clips and 8,700 listener judgments, with three judgments per clip. Its report records listener reading-error flags, majority and unanimous support, structured labels, canonical scripts, and listener notes indexed by model and item ID.
+
+Listener-labelled patterns include omissions, substitutions, insertions, reordering, early stops, and slurred or ambiguous content. These labels and vote counts identify evidence for review; they do not estimate provider error rates or establish a ranking or winner. The report preserves task/input review flags separately. Individual examples are listener reports, not independently confirmed failures from a new audio review.
+
+The [qualitative report](alphabench/alphabench_qualitative.md) contains the per-provider descriptive counts and clip inventory; the [JSON inventory](alphabench/alphabench_qualitative.json) retains the structured evidence. Model tags and item IDs map back to the main exports for audio references. Alpha pilot remains a separate diagnostic and is excluded from these results.
+
 ## Files and reproduction
 
+- [AlphaBench qualitative report](alphabench/alphabench_qualitative.md) and [structured inventory](alphabench/alphabench_qualitative.json).
 - [SupportBench report](supportbench/supportbench_report.md) and [full-precision results](supportbench/supportbench_results.json).
 - [ContentBench report](contentbench/contentbench_report.md) and [full-precision results](contentbench/contentbench_results.json).
 
@@ -80,6 +89,20 @@ for benchmark, label, expected in [
         '--n-boot', '10000', '--seed', '20260825',
         '--outdir', f'results/{benchmark}',
     ], check=True)
+
+alpha_inputs = [
+    str(Path('exports') / row['file'])
+    for row in rows
+    if row['file'].startswith('alphabench/main/')
+    and row['file'].endswith('_model.json')
+]
+assert len(alpha_inputs) == 1
+subprocess.run([
+    sys.executable, 'scripts/analyze_alphabench_qualitative.py',
+    '--stats-json', *alpha_inputs,
+    '--corpus', 'data/alphabench.jsonl',
+    '--outdir', 'results/alphabench',
+], check=True)
 PY
 ```
 
