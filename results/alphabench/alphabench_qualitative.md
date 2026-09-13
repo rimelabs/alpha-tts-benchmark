@@ -1,0 +1,741 @@
+# AlphaBench qualitative failure report
+
+Vote counts show listener support for reviewing a clip. They are not hypothesis tests, confidence intervals, provider rankings, or winner claims.
+
+## How functional impact is judged
+
+AlphaBench treats any missing, wrong, extra, repeated, reordered, truncated, or persistently ambiguous identifier character as a functional failure. It does not grade how the voice sounds.
+
+| label | disposition | reason |
+|---|---|---|
+| OMISSION | functional failure | Required content is missing. One missing identifier character can change the destination or record. |
+| SUBSTITUTION | functional failure | Required content was replaced with different content. |
+| INSERTION | functional failure | The clip added content that the canonical script did not contain. |
+| REPETITION | functional failure | Required content was spoken more than once. |
+| REORDERING | functional failure | The right characters appeared in the wrong order. |
+| EARLY_STOP | functional failure | The audio ended before the sentence or identifier was complete. |
+| SLURRED_OR_AMBIGUOUS | functional failure | Required content cannot be identified confidently by the listener. |
+| OTHER | manual review | The note does not fit a failure type. Review the clip before treating it as model evidence. |
+
+Accent, pacing, pitch, pauses, grouping, voice quality, and unspoken visual separators are not functional failures when the required content remains clear exactly once and in order.
+
+## Listener flags for evidence review
+
+These counts help reviewers find repeated failure patterns. They do not rank providers.
+
+| model | clips | valid votes | error votes | any flag | majority flag | unanimous flag | unlabelled flagged clips |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| cartesia_sonic3_default | 580 | 1740 | 76 | 64 | 9 | 3 | 45 |
+| deepgram_aura2_thalia | 580 | 1740 | 259 | 133 | 84 | 42 | 50 |
+| elevenlabs_flash25_cindycasualnarrator | 580 | 1740 | 45 | 39 | 6 | 0 | 28 |
+| openai_4ominitts_coral | 580 | 1740 | 73 | 54 | 16 | 3 | 37 |
+| rime_coda_clementine | 580 | 1740 | 58 | 45 | 10 | 3 | 29 |
+
+## Labelled failure patterns
+
+Counts are clips with at least one matching annotation label. A clip can appear under more than one label.
+
+| model | omission | substitution | insertion | repetition | reordering | early stop | slurred or ambiguous | other |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| cartesia_sonic3_default | 3 | 3 | 0 | 0 | 0 | 2 | 12 | 2 |
+| deepgram_aura2_thalia | 40 | 14 | 5 | 0 | 0 | 30 | 9 | 3 |
+| elevenlabs_flash25_cindycasualnarrator | 2 | 1 | 1 | 0 | 0 | 0 | 7 | 0 |
+| openai_4ominitts_coral | 11 | 1 | 1 | 0 | 0 | 1 | 3 | 2 |
+| rime_coda_clementine | 1 | 3 | 0 | 0 | 1 | 0 | 10 | 3 |
+
+## Task and input review flags
+
+| model | unspoken visual separator false positives | spoken dash reviews |
+|---|---:|---:|
+| cartesia_sonic3_default | 0 | 0 |
+| deepgram_aura2_thalia | 0 | 0 |
+| elevenlabs_flash25_cindycasualnarrator | 0 | 0 |
+| openai_4ominitts_coral | 0 | 1 |
+| rime_coda_clementine | 0 | 0 |
+
+## Clip evidence
+
+- cartesia_sonic3_default / alphanumerics-0003 / confirmation_code: 3/3 error votes, unanimous. Labels: SLURRED_OR_AMBIGUOUS. Script: The cancellation code CKVZSO was sent to your email as well.
+  - [SLURRED_OR_AMBIGUOUS] S
+  - The S in this selection sounded very low and off.
+- cartesia_sonic3_default / alphanumerics-0083 / confirmation_code: 3/3 error votes, unanimous. Labels: OTHER, SLURRED_OR_AMBIGUOUS. Script: At the airport kiosk, enter TTT444RLPZ when it asks for the booking code.
+  - [OTHER]
+  - Third number 4 drops when being read and is hard to hear.
+  - [SLURRED_OR_AMBIGUOUS]
+- cartesia_sonic3_default / alphanumerics-0448 / long_code: 3/3 error votes, unanimous. Labels: SUBSTITUTION. Script: Your case ID is J8IGIIRCC70QZBK34QD6P9 — please keep it handy.
+  - [SUBSTITUTION] expected: "Q", heard: "2"
+  - omission
+- cartesia_sonic3_default / alphanumerics-0184 / license_plate: 2/3 error votes, majority. Labels: SLURRED_OR_AMBIGUOUS. Script: Is 3VEI756 the plate attached to the replacement vehicle?
+  - [SLURRED_OR_AMBIGUOUS]
+- cartesia_sonic3_default / alphanumerics-0198 / license_plate: 2/3 error votes, majority. Labels: unlabelled. Script: The parking citation records the plate as 7HNJ972.
+  - slurred and doesn't say the word correctly
+- cartesia_sonic3_default / alphanumerics-0364 / policy_case_id: 2/3 error votes, majority. Labels: unlabelled. Script: The adjuster reassigned the claim to reference YL238612155 yesterday.
+- cartesia_sonic3_default / alphanumerics-0398 / tracking_number: 2/3 error votes, majority. Labels: OTHER. Script: Go ahead and paste 1ZW3I4RN26997966 into the tracking page.
+  - [OTHER] I
+  - Sounds somewhat slurred.
+- cartesia_sonic3_default / alphanumerics-0400 / tracking_number: 2/3 error votes, majority. Labels: SLURRED_OR_AMBIGUOUS. Script: Go ahead and paste YJ560901165US into the tracking page.
+  - [slurred_or_ambiguous]
+- cartesia_sonic3_default / alphanumerics-0440 / long_code: 2/3 error votes, majority. Labels: OMISSION. Script: Read this complete identifier without pausing: X1AAXKGMRCBCBL8PXCOQOP54L.
+  - [OMISSION]
+  - [OMISSION]
+- cartesia_sonic3_default / alphanumerics-0006 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The cancellation code 81O85O was sent to your email as well.
+  - Omission of the word 'was'.
+- cartesia_sonic3_default / alphanumerics-0009 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The cancellation code KNJ36077EB was sent to your email as well.
+- cartesia_sonic3_default / alphanumerics-0018 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: For passenger two, the confirmation code in the itinerary is FFF000YOLA.
+- cartesia_sonic3_default / alphanumerics-0021 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: For passenger two, the confirmation code in the itinerary is DFG67846CT.
+- cartesia_sonic3_default / alphanumerics-0029 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've booked that for you — the confirmation number is RMG8177.
+- cartesia_sonic3_default / alphanumerics-0039 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Before we disconnect, please read back confirmation code LQF71671MF.
+- cartesia_sonic3_default / alphanumerics-0040 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Before we disconnect, please read back confirmation code CHO01224AX.
+  - [SLURRED_OR_AMBIGUOUS]
+- cartesia_sonic3_default / alphanumerics-0049 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your confirmation code is C2YODY; you'll need it at check-in.
+- cartesia_sonic3_default / alphanumerics-0058 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The agent corrected the confirmation code to ZZZ999PWIW, not the earlier one.
+  - Paused with no coma
+- cartesia_sonic3_default / alphanumerics-0065 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: EARLY_STOP. Script: The agent corrected the confirmation code to MH5WR1, not the earlier one.
+  - [EARLY_STOP]
+- cartesia_sonic3_default / alphanumerics-0078 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: OMISSION. Script: At the airport kiosk, enter VPS8220 when it asks for the booking code.
+  - [OMISSION], the word "it"
+- cartesia_sonic3_default / alphanumerics-0081 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS, SUBSTITUTION. Script: At the airport kiosk, enter PXY7212 when it asks for the booking code.
+  - [SLURRED_OR_AMBIGUOUS]
+  - [SUBSTITUTION] asked
+- cartesia_sonic3_default / alphanumerics-0084 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: At the airport kiosk, enter FFF555FXIR when it asks for the booking code.
+  - feels too fast or adds extra "F" or "5"; sounds unclear
+- cartesia_sonic3_default / alphanumerics-0103 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Please tell the gate agent that you are ticketed on Alaska flight AS1882.
+  - Hesitation.
+- cartesia_sonic3_default / alphanumerics-0104 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Please tell the gate agent that you are ticketed on Alaska flight AS2408.
+- cartesia_sonic3_default / alphanumerics-0109 / flight_number: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: The departure board now lists Southwest flight WN1151 at gate C12.
+  - [SLURRED_OR_AMBIGUOUS]
+- cartesia_sonic3_default / alphanumerics-0112 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The departure board now lists United flight UA1202 at gate C12.
+  - PAUSING
+- cartesia_sonic3_default / alphanumerics-0125 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: You're confirmed on United flight UA2054, departing at 7:35 AM.
+- cartesia_sonic3_default / alphanumerics-0126 / flight_number: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: You're confirmed on Delta flight DL1401, departing at 7:35 AM.
+  - [slurred_or_ambiguous]
+- cartesia_sonic3_default / alphanumerics-0135 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I can rebook you on United flight UA1385 at no additional charge.
+  - pause without comma
+- cartesia_sonic3_default / alphanumerics-0150 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Is Southwest flight WN1400 the connection you are trying to change?
+  - i notice delay here
+- cartesia_sonic3_default / alphanumerics-0163 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: For the return trip, your itinerary shows Delta flight DL1738.
+  - Hesitation
+- cartesia_sonic3_default / alphanumerics-0167 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Please read back plate 2RRB333 before I submit the registration change.
+  - Spoken too quickly to understand
+- cartesia_sonic3_default / alphanumerics-0177 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: At the gate, enter license plate 3BCM148 on the visitor form.
+- cartesia_sonic3_default / alphanumerics-0181 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Is 2WCZ854 the plate attached to the replacement vehicle?
+- cartesia_sonic3_default / alphanumerics-0194 / license_plate: 1/3 error votes, single-listener-or-split. Labels: EARLY_STOP. Script: Can you verify the license plate? I have 2ZNK415 on file.
+  - [EARLY_STOP]
+- cartesia_sonic3_default / alphanumerics-0209 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I'm looking at order GW80945642 right now.
+- cartesia_sonic3_default / alphanumerics-0259 / order_number: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Can you confirm that order HJ29710483 is the one you'd like to return?
+  - [slurred_or_ambiguous]
+- cartesia_sonic3_default / alphanumerics-0281 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Order EV41726651 shipped out yesterday afternoon.
+- cartesia_sonic3_default / alphanumerics-0293 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Before I cancel anything, please read order SE14300205 back to me.
+- cartesia_sonic3_default / alphanumerics-0302 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: The letter lists QS554346258 as the policy tied to this address.
+  - [SLURRED_OR_AMBIGUOUS] Expected: S, Heard: F
+- cartesia_sonic3_default / alphanumerics-0310 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: I've opened case XK941914310 for this issue.
+  - [slurred_or_ambiguous]
+- cartesia_sonic3_default / alphanumerics-0313 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've opened case SG766256107 for this issue.
+- cartesia_sonic3_default / alphanumerics-0324 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your member ID, VV537370164, is printed on the back of the card.
+- cartesia_sonic3_default / alphanumerics-0332 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Before I transfer you, please write down case number AM111743782.
+- cartesia_sonic3_default / alphanumerics-0361 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The adjuster reassigned the claim to reference ZH692622859 yesterday.
+- cartesia_sonic3_default / alphanumerics-0380 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Once CS447830254US appears in the carrier app, alerts will begin automatically.
+- cartesia_sonic3_default / alphanumerics-0384 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: OMISSION. Script: Once 1Z6MCG1A82618853 appears in the carrier app, alerts will begin automatically.
+  - [OMISSION] Missing number "8"
+- cartesia_sonic3_default / alphanumerics-0414 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: According to the carrier, 1ZPPLLL086216645 was delivered at 2:14 PM.
+- cartesia_sonic3_default / alphanumerics-0417 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your tracking number is 1Z71G4HA59110555.
+- cartesia_sonic3_default / alphanumerics-0426 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The second record, not the first, uses transaction identifier JOQZYW0CBGEPC4ZGNH8SS5.
+  - PAUSING
+- cartesia_sonic3_default / alphanumerics-0429 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The second record, not the first, uses transaction identifier DQMR3765CLMYTYXEAEEWMD9.
+- cartesia_sonic3_default / alphanumerics-0432 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The audit log ends with the long authorization string 8JW3I7FH2LGPLZWB9QC8AOM.
+- cartesia_sonic3_default / alphanumerics-0435 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The audit log ends with the long authorization string PL369OJGRZP6CCX6TKVK.
+- cartesia_sonic3_default / alphanumerics-0441 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I see authorization code 0GH9YBTEP54ETVTZJFFI1 on file.
+- cartesia_sonic3_default / alphanumerics-0450 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your case ID is WFBWVSI0PBP41FMV2WNFEW8Z — please keep it handy.
+  - Hesitation.
+- cartesia_sonic3_default / alphanumerics-0456 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The full reference is QRJF3A312YGBW4WARRDO5.
+- cartesia_sonic3_default / alphanumerics-0465 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The corrected verification string is YI2921IRYI7E, not the earlier code.
+- cartesia_sonic3_default / alphanumerics-0481 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Read the two similar letter pairs in FVVBD5EDA carefully.
+- cartesia_sonic3_default / alphanumerics-0510 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The last name is spelled B-J-O-R-N-S-T-A-D.
+- cartesia_sonic3_default / alphanumerics-0524 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Yes, that's spelled B-E-A-T-R-I-X.
+- cartesia_sonic3_default / alphanumerics-0543 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Yes, that's first name S-I-O-B-H-A-N and last name P-H-I-L-L-I-P-S.
+  - SLURRED
+- cartesia_sonic3_default / alphanumerics-0545 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Yes, that's first name L-E-I-L-A and last name H-U-A-N-G.
+  - [slurred_or_ambiguous]
+- cartesia_sonic3_default / alphanumerics-0562 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Correct — D-M-I-T-R-I, like it sounds.
+- cartesia_sonic3_default / alphanumerics-0564 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Correct — G-R-E-G-O-R, like it sounds.
+- cartesia_sonic3_default / alphanumerics-0236 / order_number: 0/3 error votes, single-listener-or-split. Labels: SUBSTITUTION. Script: Was RS99294847 the order placed through the mobile app?
+  - [SUBSTITUTION] through - in
+- deepgram_aura2_thalia / alphanumerics-0020 / confirmation_code: 3/3 error votes, unanimous. Labels: EARLY_STOP, OMISSION. Script: For passenger two, the confirmation code in the itinerary is AAA555HFJG.
+  - [OMISSION], [EARLY_STOP] Missing letters "A" and "G"
+  - One of the fives should be omitted
+- deepgram_aura2_thalia / alphanumerics-0045 / confirmation_code: 3/3 error votes, unanimous. Labels: OMISSION. Script: Your confirmation code is FFF888QXKF; you'll need it at check-in.
+  - Missing one F.
+  - Forgot to pronounce the third F here
+  - [OMISSION] Missing "f"
+- deepgram_aura2_thalia / alphanumerics-0119 / flight_number: 3/3 error votes, unanimous. Labels: INSERTION. Script: Unfortunately JetBlue flight B61731 has been delayed by about ninety minutes.
+  - [INSERTION]
+  - insertion of the word hector
+- deepgram_aura2_thalia / alphanumerics-0122 / flight_number: 3/3 error votes, unanimous. Labels: INSERTION. Script: Unfortunately JetBlue flight B61513 has been delayed by about ninety minutes.
+  - [INSERTION] Hecters
+  - After the AI reads the flight code out and before it says "has", there's a weird sound/word it throws in immediately after saying 3, but before starting to pronounce has.
+- deepgram_aura2_thalia / alphanumerics-0306 / policy_case_id: 3/3 error votes, unanimous. Labels: SUBSTITUTION. Script: The letter lists LI133328201 as the policy tied to this address.
+  - Missing letter I.
+  - forgot to pronounce the I here
+  - [SUBSTITUTION] say's "1" instead of "I"
+- deepgram_aura2_thalia / alphanumerics-0396 / tracking_number: 3/3 error votes, unanimous. Labels: unlabelled. Script: Tracking number 1ZBJ9CK333830779 has not received its first scan yet.
+  - insertion after reading the number
+- deepgram_aura2_thalia / alphanumerics-0417 / tracking_number: 3/3 error votes, unanimous. Labels: unlabelled. Script: Your tracking number is 1Z71G4HA59110555.
+- deepgram_aura2_thalia / alphanumerics-0481 / confusable: 3/3 error votes, unanimous. Labels: SLURRED_OR_AMBIGUOUS. Script: Read the two similar letter pairs in FVVBD5EDA carefully.
+  - unnecesary pause
+  - [SLURRED_OR_AMBIGUOUS] expected: "A" (pronounced aye); heard: "uh"
+- deepgram_aura2_thalia / alphanumerics-0503 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP, OMISSION. Script: Please search for the customer under the spelling W-H-I-T-T-A-K-E-R.
+  - [OMISSION] A-K-E-R
+  - Does not finish spelling last name, stops at T and does not say last four letters.
+  - [EARLY_STOP]
+- deepgram_aura2_thalia / alphanumerics-0504 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: Please search for the customer under the spelling M-A-T-T-H-E-W-S.
+  - [OMISSION], [EARLY STOP]. It stops abruptly after reading out the last "T".
+  - EARLY STOP
+  - [OMMISION] Expected word M-A-T-T-H-E-W-S; Heard M-A-T-T| [OMMISION] H-E-W-S
+- deepgram_aura2_thalia / alphanumerics-0506 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: The last name is spelled H-U-A-N-G.
+  - skips
+  - [OMISSION]
+  - [OMISSION] expected: H-U-A-N-G Heard: H-U
+- deepgram_aura2_thalia / alphanumerics-0507 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP, OMISSION, OTHER. Script: The last name is spelled P-H-I-L-L-I-P-S.
+  - [OMISSION] of ps
+  - [EARLY_STOP]
+  - [OTHER] this is not said in the audio, it cuts off.
+- deepgram_aura2_thalia / alphanumerics-0509 / name_spelling: 3/3 error votes, unanimous. Labels: unlabelled. Script: The last name is spelled D-U-B-O-I-S.
+  - Omission of the letters O, I and S.
+  - Clip cut off so this part was not spoken.
+  - missing
+- deepgram_aura2_thalia / alphanumerics-0510 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP, OMISSION. Script: The last name is spelled B-J-O-R-N-S-T-A-D.
+  - [OMISSION], [EARLY_STOP] expected: "A-D" (pronounced Aye, Dee); heard: nothing.
+- deepgram_aura2_thalia / alphanumerics-0511 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: The reservation files the family name under B-J-O-R-N-S-T-A-D.
+  - [OMISSION]
+  - omission
+- deepgram_aura2_thalia / alphanumerics-0513 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP. Script: The reservation files the family name under G-R-I-F-F-I-T-H.
+  - it ends early and cuts off the h
+  - [EARLY_STOP] H.
+- deepgram_aura2_thalia / alphanumerics-0515 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: The reservation files the family name under D-U-B-O-I-S.
+  - [OMISSION], [EARLY STOP]. It abruptly stops reading out after "B".
+  - EARLY STOP
+  - [OMISSION] O-I-S (Silent heard
+- deepgram_aura2_thalia / alphanumerics-0517 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: Let me read that back: first name A-N-N-E-T-T-E, last name V-A-S-Q-U-E-Z.
+  - [OMISSION] E Z
+  - Early stop, stopped on Q and did not finish spelling out last name.
+  - Early stop
+- deepgram_aura2_thalia / alphanumerics-0520 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP. Script: Let me read that back: first name A-N-N-E-T-T-E, last name D-U-B-O-I-S.
+  - Didn't mention I-S.
+  - cuts off and doesn't pronounce the I and S
+  - [EARLY_STOP] stops over "o" and doesn't say I-S
+- deepgram_aura2_thalia / alphanumerics-0521 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP. Script: Yes, that's spelled Q-U-E-N-T-I-N.
+  - [EARLY_STOP]
+  - Omits I and N.
+- deepgram_aura2_thalia / alphanumerics-0522 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: Yes, that's spelled P-H-I-L-L-I-P.
+  - [OMISSION]
+  - omission
+- deepgram_aura2_thalia / alphanumerics-0524 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP. Script: Yes, that's spelled B-E-A-T-R-I-X.
+  - Omission of the letters T,R,I, X
+  - [Early_Stop] Stopped after "A" and left off "T-R-I-X".
+  - [EARLY_STOP]
+- deepgram_aura2_thalia / alphanumerics-0531 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP. Script: I'll spell the name for you: O-K-O-N-K-W-O.
+  - OMISSION of the letters K,W, and O
+  - [EARLY_STOP] - stopped after "N", left out "K-W-O"
+  - [EARLY_STOP]
+- deepgram_aura2_thalia / alphanumerics-0532 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP. Script: I'll spell the name for you: M-C-C-O-N-N-E-L-L.
+  - some letters were skipped
+  - [EARLY_STOP] none
+  - early stop
+- deepgram_aura2_thalia / alphanumerics-0533 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP, OMISSION. Script: I'll spell the name for you: O-T-T-O.
+  - [OMISSION] T T O
+  - Does not spell out the name fully, only the first two letters. Last two letters missing.
+  - [EARLY_STOP][OMISSION]
+- deepgram_aura2_thalia / alphanumerics-0534 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP. Script: I'll spell the name for you: G-R-E-G-O-R.
+  - [EARLY_STOP]
+  - Omits the G, O, and R.
+  - EARLY STOP
+- deepgram_aura2_thalia / alphanumerics-0536 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: Can you confirm the spelling? I have O-T-T-O.
+  - [OMISSION]
+  - other
+- deepgram_aura2_thalia / alphanumerics-0537 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP. Script: Can you confirm the spelling? I have P-R-Z-Y-B-Y-L-S-K-I.
+  - Omission of the letters 'K' and 'I'.
+  - [Early_Stop] - cut off after saying "S". Left of the "K-I".
+  - missing
+- deepgram_aura2_thalia / alphanumerics-0540 / name_spelling: 3/3 error votes, unanimous. Labels: unlabelled. Script: Can you confirm the spelling? I have O-K-O-N-K-W-O.
+  - EARLY STOP
+- deepgram_aura2_thalia / alphanumerics-0542 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP, OMISSION. Script: Yes, that's first name G-R-E-G-O-R and last name P-H-I-L-L-I-P-S.
+  - Early_stop
+  - [EARLY_STOP] P [OMISSION] S.
+- deepgram_aura2_thalia / alphanumerics-0544 / name_spelling: 3/3 error votes, unanimous. Labels: unlabelled. Script: Yes, that's first name S-I-O-B-H-A-N and last name S-C-H-M-I-D-T.
+  - OMISSION
+- deepgram_aura2_thalia / alphanumerics-0547 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP. Script: For the badge, enter the first name as K-E-N-J-I.
+  - Didn't mention J-I.
+  - doesn't pronounce the J and I
+  - [EARLY_STOP] stops after "n" leaves out J-I
+- deepgram_aura2_thalia / alphanumerics-0548 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP. Script: For the badge, enter the first name as L-E-I-L-A.
+  - They left out the words L-A at the end
+  - [EARLY_STOP]
+  - Omitted, early stop
+- deepgram_aura2_thalia / alphanumerics-0567 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: The first name is spelled M-A-E-V-E.
+  - [OMISSION]
+  - ambiguous
+  - omission
+- deepgram_aura2_thalia / alphanumerics-0568 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP, OMISSION. Script: The first name is spelled V-I-V-I-E-N-N-E.
+  - [OMISSION] N-N-E
+  - Early stop, stops spelling out name at E and does note finish last three letters.
+  - [EARLY_STOP]
+- deepgram_aura2_thalia / alphanumerics-0569 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP, OMISSION. Script: The first name is spelled Y-V-O-N-N-E.
+  - [OMISSION] Expected Y-V-O-N-N-E. Heard, Y-V
+  - [EARLY_STOP] Expected: YVONNE | Heard: YV
+- deepgram_aura2_thalia / alphanumerics-0570 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP, OMISSION. Script: The first name is spelled C-L-A-U-D-E.
+  - [OMISSION] The D and E are cut off at the end
+  - [EARLY_STOP] - EXPECTED: CLAUDE | HEARD: CLAU
+- deepgram_aura2_thalia / alphanumerics-0576 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: One more time, the surname: P-H-I-L-L-I-P-S.
+  - [OMISSION], [EARLY STOP]. It abruptly stops reading out after the letter "I".
+  - EARLY STOP
+  - Expected: P-H-L-L-I-P-S, Heard P-H-I-L-L-I,  [OMISSION] P-S
+- deepgram_aura2_thalia / alphanumerics-0577 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: One more time, the surname: W-H-I-T-T-A-K-E-R.
+  - [omission] t-t-a-k-e-r.
+  - OMISSION
+- deepgram_aura2_thalia / alphanumerics-0578 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: One more time, the surname: P-R-Z-Y-B-Y-L-S-K-I.
+  - [OMISSION]
+  - It doesn't finishing reading the line after it gets to S, completely leaving out K and I.
+  - omission
+- deepgram_aura2_thalia / alphanumerics-0579 / name_spelling: 3/3 error votes, unanimous. Labels: EARLY_STOP, OMISSION. Script: One more time, the surname: D-U-B-O-I-S.
+  - [OMISSION], [EARLY_STOP] expected: "O-I-S" (pronounced Oh, Eye, Ess); heard: nothing
+- deepgram_aura2_thalia / alphanumerics-0580 / name_spelling: 3/3 error votes, unanimous. Labels: OMISSION. Script: One more time, the surname: M-A-T-T-H-E-W-S.
+  - They didn't spell it all out
+  - Early Stop letters were not said
+  - [OMISSION] E-W-S.
+- deepgram_aura2_thalia / alphanumerics-0004 / confirmation_code: 2/3 error votes, majority. Labels: EARLY_STOP. Script: The cancellation code LLE44488GI was sent to your email as well.
+  - omission
+  - [EARLY_STOP] stopped before saying "I". Everything else fine.
+- deepgram_aura2_thalia / alphanumerics-0043 / confirmation_code: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: Before we disconnect, please read back confirmation code VDT8819.
+  - said 5 instead of V
+  - [SUBSTITUTION] expect VDT8819 heard 5DT8819
+- deepgram_aura2_thalia / alphanumerics-0109 / flight_number: 2/3 error votes, majority. Labels: EARLY_STOP. Script: The departure board now lists Southwest flight WN1151 at gate C12.
+  - [EARLY_STOP] Audio cuts off halfway through the word "twelve"
+- deepgram_aura2_thalia / alphanumerics-0118 / flight_number: 2/3 error votes, majority. Labels: INSERTION. Script: Unfortunately Southwest flight WN1399 has been delayed by about ninety minutes.
+  - [INSERTION] Audio replaces "has" with a word that sounds like "hectars"
+- deepgram_aura2_thalia / alphanumerics-0120 / flight_number: 2/3 error votes, majority. Labels: INSERTION. Script: Unfortunately Delta flight DL2105 has been delayed by about ninety minutes.
+  - [INSERTION] Hector
+  - Ambigous word or noise that it makes after saying 5 and before beginning to pronounce has.
+- deepgram_aura2_thalia / alphanumerics-0124 / flight_number: 2/3 error votes, majority. Labels: unlabelled. Script: Unfortunately Alaska flight AS868 has been delayed by about ninety minutes.
+  - Wrong word. Sounds like it said hector not has
+- deepgram_aura2_thalia / alphanumerics-0172 / license_plate: 2/3 error votes, majority. Labels: OMISSION. Script: The vehicle is registered under plate 8SLN788.
+  - [OMISSION] The audio is missing the last "8" that is shown in the text.
+- deepgram_aura2_thalia / alphanumerics-0234 / order_number: 2/3 error votes, majority. Labels: unlabelled. Script: Was JV76957781 the order placed through the mobile app?
+  - ambiguous
+  - slurred
+- deepgram_aura2_thalia / alphanumerics-0276 / order_number: 2/3 error votes, majority. Labels: OMISSION. Script: The warehouse label lists ZV88244357 as the order identifier.
+  - Skips an 8.
+  - [OMISSION]
+- deepgram_aura2_thalia / alphanumerics-0289 / order_number: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: Order IG32761916 shipped out yesterday afternoon.
+  - Substitution of 'i' with 1.
+  - [SUBSTITUTION] - Said "one" instead of "I"
+- deepgram_aura2_thalia / alphanumerics-0338 / policy_case_id: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: Use identifier IT847916729 when you upload the supporting documents.
+  - [SUBSTITUTION] expected: "I" heard: "1"
+  - mispelled as 1
+- deepgram_aura2_thalia / alphanumerics-0341 / policy_case_id: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: Use identifier WI418151183 when you upload the supporting documents.
+  - Read as "One" rather than "I"
+  - [substitution] needs to be "i" instead of "1"
+- deepgram_aura2_thalia / alphanumerics-0388 / tracking_number: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: Can you read tracking number IY944605519US back one character at a time?
+  - [SUBSTITUTION] Audio says "Y" instead of "I" as the first character of the tracking number.
+- deepgram_aura2_thalia / alphanumerics-0393 / tracking_number: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: Tracking number 1Z0MRJET68695651 has not received its first scan yet.
+  - adds in the word "hector"?
+  - [SUBSTITUTION] hector is used instead of "has"
+- deepgram_aura2_thalia / alphanumerics-0394 / tracking_number: 2/3 error votes, majority. Labels: SLURRED_OR_AMBIGUOUS, SUBSTITUTION. Script: Tracking number HL177676266US has not received its first scan yet.
+  - [SUBSTITUTION] Expected to hear "Tracking" heard "Tacking"
+  - [SLURRED_OR_AMBIGUOUS] - said "tacking" instead of "tracking"
+- deepgram_aura2_thalia / alphanumerics-0434 / long_code: 2/3 error votes, majority. Labels: unlabelled. Script: The audit log ends with the long authorization string A31F35395A3ENOB8HBF9IM.
+  - she says E
+- deepgram_aura2_thalia / alphanumerics-0436 / long_code: 2/3 error votes, majority. Labels: OMISSION. Script: Read this complete identifier without pausing: 8NIZDVE0PHEQLZNDZEPQ.
+  - [OMISSION] Expect: P, Heard: None
+- deepgram_aura2_thalia / alphanumerics-0448 / long_code: 2/3 error votes, majority. Labels: unlabelled. Script: Your case ID is J8IGIIRCC70QZBK34QD6P9 — please keep it handy.
+  - It skipped the II
+  - She missed the an I
+- deepgram_aura2_thalia / alphanumerics-0450 / long_code: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: Your case ID is WFBWVSI0PBP41FMV2WNFEW8Z — please keep it handy.
+  - [SUBSTITUTION] expected: "I", heard: "1"
+  - mispelled as 1
+- deepgram_aura2_thalia / alphanumerics-0451 / long_code: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: Please compare every character in REJE1KFRQ4GHZ2R2PG346KH with the value on your receipt.
+  - [SUBSTITUTION] expected: "G", heard: "J"
+  - mispelled as J
+- deepgram_aura2_thalia / alphanumerics-0453 / long_code: 2/3 error votes, majority. Labels: OMISSION. Script: Please compare every character in HA27ZAZGDQ9AJW0XVZLFBVC with the value on your receipt.
+  - [OMISSION] missing letter "V"
+  - The last V was not mentioned.
+- deepgram_aura2_thalia / alphanumerics-0462 / confusable: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: The corrected verification string is RYIFVARFDYD, not the earlier code.
+  - pronounced the "I" as "One"
+  - [SUBSTITUTION] say's "1" instead of "i"
+- deepgram_aura2_thalia / alphanumerics-0464 / confusable: 2/3 error votes, majority. Labels: unlabelled. Script: The corrected verification string is 4RK1BVJFVIB, not the earlier code.
+  - I heard it say 1 but thats the letter i in uppercace
+  - It said 1 not I
+- deepgram_aura2_thalia / alphanumerics-0490 / confusable: 2/3 error votes, majority. Labels: OTHER. Script: Does the account display reference MNTMBVIE in the security section?
+  - Say Y instead of I
+  - [OTHER] they said Y instead of I.
+- deepgram_aura2_thalia / alphanumerics-0491 / confusable: 2/3 error votes, majority. Labels: unlabelled. Script: The reference number is BV8QSZKDA.
+  - OMMISSON
+  - The "A" was missing
+- deepgram_aura2_thalia / alphanumerics-0495 / confusable: 2/3 error votes, majority. Labels: unlabelled. Script: The reference number is FJYYI5SZ.
+  - Missing letter I.
+  - did not pronounce the I
+- deepgram_aura2_thalia / alphanumerics-0496 / confusable: 2/3 error votes, majority. Labels: OMISSION. Script: Your verification code is YITYIWWCDEZ.
+  - [OMISSION] Expected: W, Heard: None
+- deepgram_aura2_thalia / alphanumerics-0500 / confusable: 2/3 error votes, majority. Labels: SLURRED_OR_AMBIGUOUS. Script: Your verification code is 20ZXGPSZYIVK.
+  - [SLURRED_OR_AMBIGUOUS]
+  - V sounds like a P.
+- deepgram_aura2_thalia / alphanumerics-0501 / name_spelling: 2/3 error votes, majority. Labels: EARLY_STOP. Script: Please search for the customer under the spelling V-I-V-I-E-N-N-E.
+  - [EARLY_STOP] Audio stops before reading the last three letters of the sentence.
+  - [EARLY_STOP], expected V-I-V-I-E-N-N-E, heard V-I-V-I-E-N.
+- deepgram_aura2_thalia / alphanumerics-0502 / name_spelling: 2/3 error votes, majority. Labels: EARLY_STOP, OMISSION. Script: Please search for the customer under the spelling I-S-L-A.
+  - [EARLY_STOP], [OMISSION] missing letter "A"
+- deepgram_aura2_thalia / alphanumerics-0505 / name_spelling: 2/3 error votes, majority. Labels: unlabelled. Script: Please search for the customer under the spelling P-H-I-L-L-I-P.
+  - missing the last letter in the audio
+  - OMISSION
+- deepgram_aura2_thalia / alphanumerics-0508 / name_spelling: 2/3 error votes, majority. Labels: EARLY_STOP. Script: The last name is spelled P-R-Z-Y-B-Y-L-S-K-I.
+  - [EARLY_STOP] expected P-R-X-Y-B-Y-L-S-K-I heard content P-R-Z-Y-L-S
+  - early stop
+- deepgram_aura2_thalia / alphanumerics-0516 / name_spelling: 2/3 error votes, majority. Labels: unlabelled. Script: Let me read that back: first name A-N-N-E-T-T-E, last name O-K-O-N-K-W-O.
+  - does not finish the audio/spelling the last name
+  - OMISSION
+- deepgram_aura2_thalia / alphanumerics-0518 / name_spelling: 2/3 error votes, majority. Labels: OMISSION. Script: Let me read that back: first name G-R-E-G-O-R, last name W-H-I-T-T-A-K-E-R.
+  - Omission A-K-E-R
+  - [OMISSION] A-K-E-R.
+- deepgram_aura2_thalia / alphanumerics-0519 / name_spelling: 2/3 error votes, majority. Labels: OMISSION. Script: Let me read that back: first name C-L-A-U-D-E, last name B-J-O-R-N-S-T-A-D.
+  - [OMISSION], [EARLY STOP]. It did not read out the letters A and D. The recording stopped abruptly after "T".
+  - EARLY STOP
+- deepgram_aura2_thalia / alphanumerics-0523 / name_spelling: 2/3 error votes, majority. Labels: EARLY_STOP, OMISSION. Script: Yes, that's spelled O-T-T-O.
+  - [EARLY_STOP] The audio did not read the last "O" of the sentence.
+  - [OMISSION]
+- deepgram_aura2_thalia / alphanumerics-0525 / name_spelling: 2/3 error votes, majority. Labels: EARLY_STOP. Script: Yes, that's spelled H-A-R-R-I-E-T.
+  - [EARLY_STOP] expected H-A-R-R-I-E-T heard H-A-R-R-I
+  - early stop
+- deepgram_aura2_thalia / alphanumerics-0528 / name_spelling: 2/3 error votes, majority. Labels: unlabelled. Script: I have first name K-E-N-J-I and last name P-H-I-L-L-I-P-S — is that right?
+  - reads the I in KENJI as the letter 1 (one).
+  - [SUBSTITION] Said number 1 instead of letter I
+- deepgram_aura2_thalia / alphanumerics-0535 / name_spelling: 2/3 error votes, majority. Labels: OMISSION. Script: I'll spell the name for you: G-R-I-F-F-I-T-H.
+  - [OMISSION] H
+  - omission was not included
+- deepgram_aura2_thalia / alphanumerics-0541 / name_spelling: 2/3 error votes, majority. Labels: EARLY_STOP, OMISSION. Script: Yes, that's first name M-A-E-V-E and last name M-C-C-O-N-N-E-L-L.
+  - [OMISSION]
+  - [EARLY_STOP]
+  - early stop
+- deepgram_aura2_thalia / alphanumerics-0549 / name_spelling: 2/3 error votes, majority. Labels: EARLY_STOP. Script: For the badge, enter the first name as M-A-E-V-E.
+  - [EARLY_STOP] expected M-A-E-V-E heard M-A-E-V
+  - early stop or omission
+- deepgram_aura2_thalia / alphanumerics-0550 / name_spelling: 2/3 error votes, majority. Labels: OMISSION. Script: For the badge, enter the first name as D-M-I-T-R-I.
+  - [omission] -r-i.
+  - OMISSION
+- deepgram_aura2_thalia / alphanumerics-0022 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: For passenger two, the confirmation code in the itinerary is FIA70817QQ.
+  - It states F1 not FI
+- deepgram_aura2_thalia / alphanumerics-0025 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: SUBSTITUTION. Script: I've booked that for you — the confirmation number is TPB4967.
+  - [SUBSTITUTION] The audio say "key" instead of "P" and also said "E" instead of "B"
+- deepgram_aura2_thalia / alphanumerics-0031 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've booked that for you — the confirmation number is LFX17669BC.
+- deepgram_aura2_thalia / alphanumerics-0037 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Before we disconnect, please read back confirmation code FFF222AQWF.
+- deepgram_aura2_thalia / alphanumerics-0062 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: The agent corrected the confirmation code to DKZ39931LF, not the earlier one.
+  - [SLURRED_OR_AMBIGUOUS] Expected: Z, Heard: V
+- deepgram_aura2_thalia / alphanumerics-0065 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The agent corrected the confirmation code to MH5WR1, not the earlier one.
+  - Ambiguous
+- deepgram_aura2_thalia / alphanumerics-0076 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: OMISSION. Script: Please write down this reference: EEE555XACA.
+  - [Omission]
+  - [Omission]
+  - EARLY STOP
+- deepgram_aura2_thalia / alphanumerics-0078 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: At the airport kiosk, enter VPS8220 when it asks for the booking code.
+- deepgram_aura2_thalia / alphanumerics-0089 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: OMISSION. Script: HHH888WDHY is the only confirmation code associated with this reservation.
+  - [OMISSION] The audio is missing the first "H" from the confirmation code shown in the text.
+- deepgram_aura2_thalia / alphanumerics-0095 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: 1PO0YW is the only confirmation code associated with this reservation.
+  - [SLURRED_OR_AMBIGUOUS] expected: "P" (pronounced Pee); heard: Key
+- deepgram_aura2_thalia / alphanumerics-0103 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Please tell the gate agent that you are ticketed on Alaska flight AS1882.
+- deepgram_aura2_thalia / alphanumerics-0117 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Unfortunately Southwest flight WN2848 has been delayed by about ninety minutes.
+  - substitution
+- deepgram_aura2_thalia / alphanumerics-0123 / flight_number: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS, SUBSTITUTION. Script: Unfortunately Delta flight DL1261 has been delayed by about ninety minutes.
+  - [SUBSTITUTION] expected to hear "DL1261 has been delayed by about ninety minutes." Heard "DL1261 Hector been delayed by about ninety minute."
+  - [SLURRED_OR_AMBIGUOUS]
+- deepgram_aura2_thalia / alphanumerics-0130 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: You're confirmed on United flight UA1489, departing at 7:35 AM.
+- deepgram_aura2_thalia / alphanumerics-0140 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I can rebook you on American flight AA1320 at no additional charge.
+- deepgram_aura2_thalia / alphanumerics-0145 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The text alert refers to JetBlue flight B640, not the earlier departure.
+- deepgram_aura2_thalia / alphanumerics-0209 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I'm looking at order GW80945642 right now.
+- deepgram_aura2_thalia / alphanumerics-0228 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Was FR81131257 the order placed through the mobile app?
+- deepgram_aura2_thalia / alphanumerics-0236 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Was RS99294847 the order placed through the mobile app?
+- deepgram_aura2_thalia / alphanumerics-0257 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Can you confirm that order QC92352216 is the one you'd like to return?
+- deepgram_aura2_thalia / alphanumerics-0269 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The refund for order GN26969942 was processed this morning.
+- deepgram_aura2_thalia / alphanumerics-0299 / order_number: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Before I cancel anything, please read order YQ55090037 back to me.
+  - [SLURRED_OR_AMBIGUOUS]
+- deepgram_aura2_thalia / alphanumerics-0309 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The letter lists BQ617461096 as the policy tied to this address.
+- deepgram_aura2_thalia / alphanumerics-0316 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've opened case XS219377404 for this issue.
+- deepgram_aura2_thalia / alphanumerics-0335 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Use identifier EK593803072 when you upload the supporting documents.
+- deepgram_aura2_thalia / alphanumerics-0367 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Can you confirm whether case ZN599031971 concerns the billing dispute?
+- deepgram_aura2_thalia / alphanumerics-0377 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The shipping label shows tracking identifier 1ZWEPX3894624406 beneath the barcode.
+- deepgram_aura2_thalia / alphanumerics-0385 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Once ZQ764893851US appears in the carrier app, alerts will begin automatically.
+  - It sounds like she said "One" instead Of "once" I assumed she was reading the code from the beginning
+- deepgram_aura2_thalia / alphanumerics-0390 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Can you read tracking number 1ZDMR74Z34962352 back one character at a time?
+  - slurred letter Z
+- deepgram_aura2_thalia / alphanumerics-0395 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: INSERTION. Script: Tracking number 1ZGSVCT451187450 has not received its first scan yet.
+  - [INSERTION] expected ...7450 has not heard ...7450 hectar has not
+- deepgram_aura2_thalia / alphanumerics-0407 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: For the second parcel, use 1ZEC3E9D85415137 rather than the number in the first email.
+  - Wrong pronunciation for the letter Z as ZE
+- deepgram_aura2_thalia / alphanumerics-0409 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: For the second parcel, use 1ZPR1K6K80540460 rather than the number in the first email.
+  - Slurred
+- deepgram_aura2_thalia / alphanumerics-0414 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: According to the carrier, 1ZPPLLL086216645 was delivered at 2:14 PM.
+- deepgram_aura2_thalia / alphanumerics-0415 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: According to the carrier, 1ZSOV8HO86531320 was delivered at 2:14 PM.
+  - Ambiguous - I heard "F" more than "S"
+- deepgram_aura2_thalia / alphanumerics-0419 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your tracking number is JE695353066US.
+  - She didn't clearly say "is"
+- deepgram_aura2_thalia / alphanumerics-0421 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The transaction hash is T1HF9TBR7B255ZYQOEKSLG1.
+- deepgram_aura2_thalia / alphanumerics-0441 / long_code: 1/3 error votes, single-listener-or-split. Labels: OMISSION. Script: I see authorization code 0GH9YBTEP54ETVTZJFFI1 on file.
+  - [OMISSION] expected: "I" (pronounced eye); heard: nothing
+- deepgram_aura2_thalia / alphanumerics-0444 / long_code: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: I see authorization code 1DN9AWL5N0DIWPZJDSNBBZT2 on file.
+  - [SLURRED_OR_AMBIGUOUS] Expected: S, Heard: F
+- deepgram_aura2_thalia / alphanumerics-0449 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your case ID is M6054G43O4QACBHXNP1B — please keep it handy.
+- deepgram_aura2_thalia / alphanumerics-0452 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Please compare every character in 4HOLYMVDIQ9MXNMBWF42 with the value on your receipt.
+- deepgram_aura2_thalia / alphanumerics-0457 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The full reference is H9OIKZBRN1KCEY6BOEA2CK.
+- deepgram_aura2_thalia / alphanumerics-0463 / confusable: 1/3 error votes, single-listener-or-split. Labels: SUBSTITUTION. Script: The corrected verification string is 45FYIKCFGKX, not the earlier code.
+  - [SUBSTITUTION] Herification
+- deepgram_aura2_thalia / alphanumerics-0468 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I have code PTLKNBDY on the account.
+- deepgram_aura2_thalia / alphanumerics-0469 / confusable: 1/3 error votes, single-listener-or-split. Labels: OTHER. Script: I have code FMNDAW5ZQBV on the account.
+  - [OTHER] I am not sure if this is substitution or unclear pronunciation, but it sounds very much like they are saying "E" instead of "V" for the last letter.
+- deepgram_aura2_thalia / alphanumerics-0478 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Please confirm: S2F5FVMNX.
+- deepgram_aura2_thalia / alphanumerics-0539 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Can you confirm the spelling? I have V-I-V-I-E-N-N-E.
+  - truncate
+- deepgram_aura2_thalia / alphanumerics-0543 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: OMISSION. Script: Yes, that's first name S-I-O-B-H-A-N and last name P-H-I-L-L-I-P-S.
+  - [OMISSION] Expected: S, Heard: None
+- deepgram_aura2_thalia / alphanumerics-0545 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Yes, that's first name L-E-I-L-A and last name H-U-A-N-G.
+  - cuts off the last letter in the audio
+- deepgram_aura2_thalia / alphanumerics-0546 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: EARLY_STOP, OMISSION. Script: For the badge, enter the first name as S-I-O-B-H-A-N.
+  - [OMISSION],[EARLY_STOP]
+- deepgram_aura2_thalia / alphanumerics-0104 / flight_number: 0/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Please tell the gate agent that you are ticketed on Alaska flight AS2408.
+  - [SLURRED_OR_AMBIGUOUS] - said "egent" and not "agent"
+- deepgram_aura2_thalia / alphanumerics-0152 / flight_number: 0/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Is American flight AA633 the connection you are trying to change?
+  - Pronounced as though there's a single long A rather than spacing out two separate As
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0320 / policy_case_id: 2/3 error votes, majority. Labels: SLURRED_OR_AMBIGUOUS. Script: Your member ID, TB457202368, is printed on the back of the card.
+  - [slurred_or_ambiguous]
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0496 / confusable: 2/3 error votes, majority. Labels: unlabelled. Script: Your verification code is YITYIWWCDEZ.
+  - the both double u's werent spelled out correctly.
+  - Slurred spoken too quickly to understand
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0516 / name_spelling: 2/3 error votes, majority. Labels: unlabelled. Script: Let me read that back: first name A-N-N-E-T-T-E, last name O-K-O-N-K-W-O.
+  - slurred - did not sound like W
+  - mispronunciation
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0518 / name_spelling: 2/3 error votes, majority. Labels: SLURRED_OR_AMBIGUOUS. Script: Let me read that back: first name G-R-E-G-O-R, last name W-H-I-T-T-A-K-E-R.
+  - [SLURRED_OR_AMBIGUOUS]
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0527 / name_spelling: 2/3 error votes, majority. Labels: SLURRED_OR_AMBIGUOUS. Script: I have first name Q-U-E-N-T-I-N and last name O-K-O-N-K-W-O — is that right?
+  - [SLURRED_OR_AMBIGUOUS] It slurred the letters K and W together and did not distinguish them.
+  - SLURRED/OMISSION
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0531 / name_spelling: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: I'll spell the name for you: O-K-O-N-K-W-O.
+  - [SUBSTITUTION] W, D
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0004 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The cancellation code LLE44488GI was sent to your email as well.
+  - It sounds like she said, "I was sent to your email as well"
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0024 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've booked that for you — the confirmation number is TJG03767XL.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0091 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: DM2CVC is the only confirmation code associated with this reservation.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0136 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I can rebook you on JetBlue flight B61804 at no additional charge.
+  - SUBSTITUTION of the word 'at' with 'for'.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0150 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Is Southwest flight WN1400 the connection you are trying to change?
+  - omission
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0158 / flight_number: 1/3 error votes, single-listener-or-split. Labels: OMISSION. Script: For the return trip, your itinerary shows Delta flight DL1439.
+  - [OMISSION]
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0171 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The vehicle is registered under plate 9WRZ909.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0195 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The parking citation records the plate as 6IKM382.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0196 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The parking citation records the plate as 1NOD960.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0199 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The parking citation records the plate as 7YRJ750.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0228 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Was FR81131257 the order placed through the mobile app?
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0231 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Was IH98417058 the order placed through the mobile app?
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0232 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Was DV39680540 the order placed through the mobile app?
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0235 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Was NB22554725 the order placed through the mobile app?
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0242 / order_number: 1/3 error votes, single-listener-or-split. Labels: OMISSION. Script: I found two purchases, but XJ39350544 is the order still awaiting delivery.
+  - [OMISSION]
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0253 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Can you confirm that order YP98718629 is the one you'd like to return?
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0307 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The letter lists CO352811635 as the policy tied to this address.
+  - she said "is" not "as"
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0317 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've opened case HT278526832 for this issue.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0318 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Your member ID, VA518100567, is printed on the back of the card.
+  - [slurred_or_ambiguous]
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0343 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your policy number is HJ903638722, effective the first of next month.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0372 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Can you confirm whether case RN204741465 concerns the billing dispute?
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0380 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Once CS447830254US appears in the carrier app, alerts will begin automatically.
+  - [slurred_or_ambiguous]
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0398 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Go ahead and paste 1ZW3I4RN26997966 into the tracking page.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0415 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: INSERTION. Script: According to the carrier, 1ZSOV8HO86531320 was delivered at 2:14 PM.
+  - [INSERTION] expected "8H", heard: "88H"
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0435 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The audit log ends with the long authorization string PL369OJGRZP6CCX6TKVK.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0449 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your case ID is M6054G43O4QACBHXNP1B — please keep it handy.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0466 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I have code MNL9ICZ16DBD on the account.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0467 / confusable: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: I have code PT6PTC3PD on the account.
+  - [slurred_or_ambiguous]
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0477 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Please confirm: BV0EDSZGBLI5.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0503 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Please search for the customer under the spelling W-H-I-T-T-A-K-E-R.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0546 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: For the badge, enter the first name as S-I-O-B-H-A-N.
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0554 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: That's O-K-O-N-K-W-O on the account.
+  - [SLURRED_OR_AMBIGUOUS] expected: "W-O" (pronounced double-u, oh); heard: duo
+- elevenlabs_flash25_cindycasualnarrator / alphanumerics-0555 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: That's M-A-T-T-H-E-W-S on the account.
+- openai_4ominitts_coral / alphanumerics-0068 / confirmation_code: 3/3 error votes, unanimous. Labels: OMISSION. Script: Please write down this reference: L2EZ2F.
+  - [OMISSION], [EARLY STOP]. It did not read out the letter "F" and stopped abruptly after "2".
+  - L2EZ2, EARLY STOP
+  - [OMISSION] Expected "F"
+- openai_4ominitts_coral / alphanumerics-0416 / tracking_number: 3/3 error votes, unanimous. Labels: OMISSION. Review: SPOKEN_DASH_REVIEW. Script: Your tracking number is 1ZCHY9QV72511397.
+  - [OMISSION] -
+  - Inserts a dash where it does not exist.
+  - insertion
+- openai_4ominitts_coral / alphanumerics-0450 / long_code: 3/3 error votes, unanimous. Labels: SUBSTITUTION. Script: Your case ID is WFBWVSI0PBP41FMV2WNFEW8Z — please keep it handy.
+  - [SUBSTITUTION] expected: "B", heard: "P"
+  - mispelled as p
+- openai_4ominitts_coral / alphanumerics-0045 / confirmation_code: 2/3 error votes, majority. Labels: OMISSION. Script: Your confirmation code is FFF888QXKF; you'll need it at check-in.
+  - [OMISSION] - There is an 8 missing
+  - Adds an extra 8.
+- openai_4ominitts_coral / alphanumerics-0062 / confirmation_code: 2/3 error votes, majority. Labels: OMISSION. Script: The agent corrected the confirmation code to DKZ39931LF, not the earlier one.
+  - [OMISSION]
+  - EARLY STOP
+- openai_4ominitts_coral / alphanumerics-0198 / license_plate: 2/3 error votes, majority. Labels: OTHER, SLURRED_OR_AMBIGUOUS. Script: The parking citation records the plate as 7HNJ972.
+  - [SLURRED_OR_AMBIGUOUS]
+  - [OTHER] pronunciation
+- openai_4ominitts_coral / alphanumerics-0225 / order_number: 2/3 error votes, majority. Labels: INSERTION. Script: For the damaged item, use order number NX19225287 on the claim form.
+  - [INSERTION] 22, 222
+  - Included an extra 2 at 9225, says 3 and there are only 2 in the middle.
+- openai_4ominitts_coral / alphanumerics-0429 / long_code: 2/3 error votes, majority. Labels: OMISSION. Script: The second record, not the first, uses transaction identifier DQMR3765CLMYTYXEAEEWMD9.
+  - [OMISSION] Expected: E, Heard: None
+- openai_4ominitts_coral / alphanumerics-0436 / long_code: 2/3 error votes, majority. Labels: OMISSION. Script: Read this complete identifier without pausing: 8NIZDVE0PHEQLZNDZEPQ.
+  - Skips the E.
+  - [OMISSION]
+- openai_4ominitts_coral / alphanumerics-0437 / long_code: 2/3 error votes, majority. Labels: OMISSION. Script: Read this complete identifier without pausing: PV9IW47G9OJHEJYK6OA18OV.
+  - omission
+  - [OMISSION]
+- openai_4ominitts_coral / alphanumerics-0444 / long_code: 2/3 error votes, majority. Labels: unlabelled. Script: I see authorization code 1DN9AWL5N0DIWPZJDSNBBZT2 on file.
+  - She forgot the "J"
+- openai_4ominitts_coral / alphanumerics-0448 / long_code: 2/3 error votes, majority. Labels: EARLY_STOP, OMISSION. Script: Your case ID is J8IGIIRCC70QZBK34QD6P9 — please keep it handy.
+  - [OMISSION]expected to hear "please keep it handy" heard nothing
+  - [EARLY_STOP] - please keep it handy was entirely omitted.
+- openai_4ominitts_coral / alphanumerics-0469 / confusable: 2/3 error votes, majority. Labels: unlabelled. Script: I have code FMNDAW5ZQBV on the account.
+  - OMMISSION
+  - "A" was missing
+- openai_4ominitts_coral / alphanumerics-0473 / confusable: 2/3 error votes, majority. Labels: unlabelled. Script: Before continuing, enter RKK4BDSZW exactly as it appears on the screen.
+  - insertion
+- openai_4ominitts_coral / alphanumerics-0496 / confusable: 2/3 error votes, majority. Labels: unlabelled. Script: Your verification code is YITYIWWCDEZ.
+  - She didnt mention the Z at the end
+  - Omitted, early stop
+- openai_4ominitts_coral / alphanumerics-0527 / name_spelling: 2/3 error votes, majority. Labels: OMISSION. Script: I have first name Q-U-E-N-T-I-N and last name O-K-O-N-K-W-O — is that right?
+  - [OMISSION] Expected: is that right?, Heard: None
+- openai_4ominitts_coral / alphanumerics-0017 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: For passenger two, the confirmation code in the itinerary is GGX39031RM.
+  - mispelled as O
+- openai_4ominitts_coral / alphanumerics-0026 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've booked that for you — the confirmation number is TMM17208MC.
+- openai_4ominitts_coral / alphanumerics-0028 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've booked that for you — the confirmation number is MMM000EQIF.
+- openai_4ominitts_coral / alphanumerics-0030 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've booked that for you — the confirmation number is QPV68294IM.
+- openai_4ominitts_coral / alphanumerics-0032 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've booked that for you — the confirmation number is NM4IS9.
+  - ambiguous
+- openai_4ominitts_coral / alphanumerics-0061 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The agent corrected the confirmation code to BBB444GZBH, not the earlier one.
+- openai_4ominitts_coral / alphanumerics-0064 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The agent corrected the confirmation code to 0EJQRW, not the earlier one.
+- openai_4ominitts_coral / alphanumerics-0094 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: EJN0908 is the only confirmation code associated with this reservation.
+  - [SLURRED_OR_AMBIGUOUS]It is very unclear what letter this is in the audio, it sounds more like "yee" than "E"
+- openai_4ominitts_coral / alphanumerics-0151 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Is Delta flight DL2666 the connection you are trying to change?
+- openai_4ominitts_coral / alphanumerics-0154 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Is JetBlue flight B61432 the connection you are trying to change?
+- openai_4ominitts_coral / alphanumerics-0173 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The vehicle is registered under plate 9OXP508.
+- openai_4ominitts_coral / alphanumerics-0196 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The parking citation records the plate as 1NOD960.
+  - Now pronouncing the Letter O versus Zero correctly
+- openai_4ominitts_coral / alphanumerics-0200 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The tow lot released the car with plate number 3EKI816 this morning.
+  - Slurred
+- openai_4ominitts_coral / alphanumerics-0201 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The tow lot released the car with plate number 1FMY501 this morning.
+- openai_4ominitts_coral / alphanumerics-0209 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I'm looking at order GW80945642 right now.
+  - mispelled as O
+- openai_4ominitts_coral / alphanumerics-0234 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Was JV76957781 the order placed through the mobile app?
+- openai_4ominitts_coral / alphanumerics-0249 / order_number: 1/3 error votes, single-listener-or-split. Labels: OMISSION. Script: Can you confirm that order DP59207768 is the one you'd like to return?
+  - [OMISSION]. It does not read out the second 7 in the sequence.
+- openai_4ominitts_coral / alphanumerics-0295 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Before I cancel anything, please read order PD87852543 back to me.
+- openai_4ominitts_coral / alphanumerics-0300 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Before I cancel anything, please read order FK51423037 back to me.
+- openai_4ominitts_coral / alphanumerics-0325 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your member ID, LL784672040, is printed on the back of the card.
+  - slurred
+- openai_4ominitts_coral / alphanumerics-0328 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Before I transfer you, please write down case number HX652836487.
+- openai_4ominitts_coral / alphanumerics-0334 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Use identifier NB209960391 when you upload the supporting documents.
+  - Pronounces 0s (zero) as O's. Could be stylistic choice but when giving someone a could would be actively detrimental.
+- openai_4ominitts_coral / alphanumerics-0356 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The claim was filed under reference CA469051591.
+- openai_4ominitts_coral / alphanumerics-0367 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Can you confirm whether case ZN599031971 concerns the billing dispute?
+- openai_4ominitts_coral / alphanumerics-0384 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Once 1Z6MCG1A82618853 appears in the carrier app, alerts will begin automatically.
+  - Repeated twice.
+- openai_4ominitts_coral / alphanumerics-0393 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Tracking number 1Z0MRJET68695651 has not received its first scan yet.
+  - It sounds like she said "C" instead of "Z"
+- openai_4ominitts_coral / alphanumerics-0418 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your tracking number is 1ZO1RWRD90512393.
+- openai_4ominitts_coral / alphanumerics-0420 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Your tracking number is 1Z625GNG57429819.
+  - [SLURRED_OR_AMBIGUOUS] Sounds like it could be an M instead of N
+- openai_4ominitts_coral / alphanumerics-0426 / long_code: 1/3 error votes, single-listener-or-split. Labels: OTHER. Script: The second record, not the first, uses transaction identifier JOQZYW0CBGEPC4ZGNH8SS5.
+  - [OTHER] 8 is not said in the audio.
+- openai_4ominitts_coral / alphanumerics-0438 / long_code: 1/3 error votes, single-listener-or-split. Labels: OMISSION. Script: Read this complete identifier without pausing: 8QCS7JZIQI04NCOD1DZ9D.
+  - [OMISSION]
+- openai_4ominitts_coral / alphanumerics-0451 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Please compare every character in REJE1KFRQ4GHZ2R2PG346KH with the value on your receipt.
+  - she said FR2
+- openai_4ominitts_coral / alphanumerics-0456 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The full reference is QRJF3A312YGBW4WARRDO5.
+  - ommision
+- openai_4ominitts_coral / alphanumerics-0471 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Before continuing, enter VFVLNMNA6 exactly as it appears on the screen.
+  - Hard to understand the ending of the code
+- openai_4ominitts_coral / alphanumerics-0488 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Does the account display reference 9YISZ10B3G in the security section?
+- openai_4ominitts_coral / alphanumerics-0509 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The last name is spelled D-U-B-O-I-S.
+- openai_4ominitts_coral / alphanumerics-0516 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Let me read that back: first name A-N-N-E-T-T-E, last name O-K-O-N-K-W-O.
+  - Pronounced as "Bo" and not "O"
+- openai_4ominitts_coral / alphanumerics-0530 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I have first name S-I-O-B-H-A-N and last name B-J-O-R-N-S-T-A-D — is that right?
+- openai_4ominitts_coral / alphanumerics-0566 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The first name is spelled L-E-I-L-A.
+- openai_4ominitts_coral / alphanumerics-0355 / policy_case_id: 0/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The claim was filed under reference WQ867976204.
+  - Looks like a zero, 0, instead of letter "O".
+- rime_coda_clementine / alphanumerics-0066 / confirmation_code: 3/3 error votes, unanimous. Labels: OMISSION. Script: The agent corrected the confirmation code to CCC666CQIT, not the earlier one.
+  - [OMISSION] 666. 66
+  - Left out the third 6 in this.
+  - [OMISSION]
+- rime_coda_clementine / alphanumerics-0463 / confusable: 3/3 error votes, unanimous. Labels: SUBSTITUTION. Script: The corrected verification string is 45FYIKCFGKX, not the earlier code.
+  - [SUBSTITUTION]
+  - mispelled
+- rime_coda_clementine / alphanumerics-0550 / name_spelling: 3/3 error votes, unanimous. Labels: SLURRED_OR_AMBIGUOUS. Script: For the badge, enter the first name as D-M-I-T-R-I.
+  - [SLURRED_OR_AMBIGUOUS] R , OR
+  - R sounds like "or".
+  - [SLURRED_OR_AMBIGUOUS]
+- rime_coda_clementine / alphanumerics-0089 / confirmation_code: 2/3 error votes, majority. Labels: REORDERING, SLURRED_OR_AMBIGUOUS. Script: HHH888WDHY is the only confirmation code associated with this reservation.
+  - [SLURRED_OR_AMBIGUOUS], [REORDERING]
+- rime_coda_clementine / alphanumerics-0096 / confirmation_code: 2/3 error votes, majority. Labels: unlabelled. Script: ZFZBP0 is the only confirmation code associated with this reservation.
+  - SHE PRONOUNCED F INCORRECTLY
+- rime_coda_clementine / alphanumerics-0119 / flight_number: 2/3 error votes, majority. Labels: SUBSTITUTION. Script: Unfortunately JetBlue flight B61731 has been delayed by about ninety minutes.
+  - [Substitution] The voice said JetBrue instead of Jetblue
+  - Said "JetBrue" - word pronounced incorrectly
+- rime_coda_clementine / alphanumerics-0121 / flight_number: 2/3 error votes, majority. Labels: SLURRED_OR_AMBIGUOUS. Script: Unfortunately Alaska flight AS2873 has been delayed by about ninety minutes.
+  - [SLURRED_OR_AMBIGUOUS]
+- rime_coda_clementine / alphanumerics-0485 / confusable: 2/3 error votes, majority. Labels: SLURRED_OR_AMBIGUOUS. Script: Read the two similar letter pairs in 9VFSSZYJGTQ carefully.
+  - [SLURRED_OR_AMBIGUOUS]
+- rime_coda_clementine / alphanumerics-0492 / confusable: 2/3 error votes, majority. Labels: OTHER. Script: The reference number is QBZPPTPTM.
+  - [OTHER] The audio adds an "E" on the end of the reference number that does not exist in the text.
+- rime_coda_clementine / alphanumerics-0529 / name_spelling: 2/3 error votes, majority. Labels: unlabelled. Script: I have first name Q-U-E-N-T-I-N and last name G-R-I-F-F-I-T-H — is that right?
+  - [MISSING]
+- rime_coda_clementine / alphanumerics-0006 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The cancellation code 81O85O was sent to your email as well.
+- rime_coda_clementine / alphanumerics-0020 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: For passenger two, the confirmation code in the itinerary is AAA555HFJG.
+  - [SLURRED_OR_AMBIGUOUS]
+- rime_coda_clementine / alphanumerics-0029 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I've booked that for you — the confirmation number is RMG8177.
+- rime_coda_clementine / alphanumerics-0053 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Your confirmation code is 75CTZJ; you'll need it at check-in.
+- rime_coda_clementine / alphanumerics-0085 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: At the airport kiosk, enter ODA30517NR when it asks for the booking code.
+  - Its like a pause right after the word finishes.
+- rime_coda_clementine / alphanumerics-0098 / confirmation_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: PSKPYM is the only confirmation code associated with this reservation.
+- rime_coda_clementine / alphanumerics-0102 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Please tell the gate agent that you are ticketed on American flight AA388.
+- rime_coda_clementine / alphanumerics-0122 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Unfortunately JetBlue flight B61513 has been delayed by about ninety minutes.
+- rime_coda_clementine / alphanumerics-0123 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Unfortunately Delta flight DL1261 has been delayed by about ninety minutes.
+- rime_coda_clementine / alphanumerics-0142 / flight_number: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: The text alert refers to JetBlue flight B61626, not the earlier departure.
+  - [slurred_or_ambiguous] flightb
+- rime_coda_clementine / alphanumerics-0149 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Is JetBlue flight B6302 the connection you are trying to change?
+  - It sounds ambiguous to me.
+- rime_coda_clementine / alphanumerics-0152 / flight_number: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Is American flight AA633 the connection you are trying to change?
+  - [SLURRED_OR_AMBIGUOUS]
+- rime_coda_clementine / alphanumerics-0153 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Is American flight AA2479 the connection you are trying to change?
+- rime_coda_clementine / alphanumerics-0157 / flight_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: For the return trip, your itinerary shows American flight AA2295.
+- rime_coda_clementine / alphanumerics-0182 / license_plate: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Is 4GXB831 the plate attached to the replacement vehicle?
+  - [read wrong]
+- rime_coda_clementine / alphanumerics-0238 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: I found two purchases, but GD86960124 is the order still awaiting delivery.
+- rime_coda_clementine / alphanumerics-0261 / order_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The refund for order PE16954241 was processed this morning.
+- rime_coda_clementine / alphanumerics-0262 / order_number: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: The refund for order OK56232905 was processed this morning.
+  - [slurred_or_ambiguous]
+- rime_coda_clementine / alphanumerics-0307 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The letter lists CO352811635 as the policy tied to this address.
+- rime_coda_clementine / alphanumerics-0337 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: OTHER. Script: Use identifier CK945949973 when you upload the supporting documents.
+  - [OTHER]. It does not so much slur the 4 into the 9 but it almost sounds like it overlaps.
+- rime_coda_clementine / alphanumerics-0352 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The claim was filed under reference NI748369151.
+  - added the letter "E" in-between "I" and "7"
+- rime_coda_clementine / alphanumerics-0373 / policy_case_id: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Can you confirm whether case GI328679250 concerns the billing dispute?
+- rime_coda_clementine / alphanumerics-0378 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The shipping label shows tracking identifier 1Z8N0SCE87949319 beneath the barcode.
+- rime_coda_clementine / alphanumerics-0383 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Once 1ZAZM9ML98238677 appears in the carrier app, alerts will begin automatically.
+- rime_coda_clementine / alphanumerics-0387 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Can you read tracking number DZ905986545US back one character at a time?
+- rime_coda_clementine / alphanumerics-0399 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Go ahead and paste 1ZC76EZ049247107 into the tracking page.
+- rime_coda_clementine / alphanumerics-0414 / tracking_number: 1/3 error votes, single-listener-or-split. Labels: SUBSTITUTION. Script: According to the carrier, 1ZPPLLL086216645 was delivered at 2:14 PM.
+  - [SUBSTITUTION] 0, O
+- rime_coda_clementine / alphanumerics-0431 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The audit log ends with the long authorization string VA5NTCSDN3QXSAK53073A1.
+- rime_coda_clementine / alphanumerics-0440 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Read this complete identifier without pausing: X1AAXKGMRCBCBL8PXCOQOP54L.
+- rime_coda_clementine / alphanumerics-0451 / long_code: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Please compare every character in REJE1KFRQ4GHZ2R2PG346KH with the value on your receipt.
+  - [slurred_or_ambiguous]
+- rime_coda_clementine / alphanumerics-0456 / long_code: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The full reference is QRJF3A312YGBW4WARRDO5.
+- rime_coda_clementine / alphanumerics-0462 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: The corrected verification string is RYIFVARFDYD, not the earlier code.
+- rime_coda_clementine / alphanumerics-0475 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Before continuing, enter WBGK2KPBV4TZ exactly as it appears on the screen.
+- rime_coda_clementine / alphanumerics-0487 / confusable: 1/3 error votes, single-listener-or-split. Labels: unlabelled. Script: Does the account display reference PTSG8KJ0GK0 in the security section?
+- rime_coda_clementine / alphanumerics-0565 / name_spelling: 1/3 error votes, single-listener-or-split. Labels: SLURRED_OR_AMBIGUOUS. Script: Correct — H-A-R-R-I-E-T, like it sounds.
+  - [SLURRED_OR_AMBIGUOUS] Didn't say E and T right
+- rime_coda_clementine / alphanumerics-0288 / order_number: 0/3 error votes, single-listener-or-split. Labels: OTHER. Script: Order CK90785175 shipped out yesterday afternoon.
+  - [OTHER]. The audio almost stutters over the word "yesterday".
