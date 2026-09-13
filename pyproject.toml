@@ -1,0 +1,14 @@
+[project]
+name = "alpha-tts-benchmark"
+version = "0.1.0"
+description = "A reproducible human evaluation benchmark for text-to-speech systems"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+    "numpy>=2.5.1",
+    "podonos==0.45.0",
+    "scipy>=1.18.0",
+]
+
+[tool.uv]
+package = false

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "scope": "US-English",
+  "benchmarks": {
+    "alphabench": [
+      "rime",
+      "elevenlabs",
+      "deepgram",
+      "cartesia",
+      "openai"
+    ],
+    "supportbench": [
+      "rime",
+      "elevenlabs",
+      "deepgram",
+      "cartesia",
+      "openai"
+    ],
+    "contentbench": [
+      "rime",
+      "elevenlabs",
+      "deepgram",
+      "cartesia",
+      "openai"
+    ]
+  },
+  "providers": {
+    "rime": {
+      "model": "coda",
+      "voice": "clementine",
+      "sample_rate": 24000
+    },
+    "elevenlabs": {
+      "model": "eleven_flash_v2_5",
+      "voice_id": "vCHG6sKIqAbXWNNm5vpY",
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "apply_text_normalization": "on",
+      "sample_rate": 24000
+    },
+    "deepgram": {
+      "model": "aura-2-thalia-en",
+      "encoding": "linear16",
+      "sample_rate": 24000
+    },
+    "cartesia": {
+      "api_version": "2026-03-01",
+      "model": "sonic-3",
+      "voice_id": "e07c00bc-4134-4eae-9ea4-1a55fb45746b",
+      "voice_name": "default",
+      "language": "en",
+      "sample_rate": 24000
+    },
+    "openai": {
+      "model": "gpt-4o-mini-tts",
+      "voice": "coral",
+      "response_format": "pcm",
+      "sample_rate": 24000
+    }
+  }
+}

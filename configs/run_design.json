@@ -1,0 +1,241 @@
+{
+  "protocol_version": "1.0.0",
+  "status": "frozen",
+  "scope": "US-English",
+  "listener_country": "United States",
+  "language": "en-us",
+  "provider_config": "configs/provider_configs.json",
+  "listener_tasks": "configs/listener_tasks.json",
+  "audio": {
+    "mode": "level-matched",
+    "sample_rate_hz": 24000,
+    "channels": 1,
+    "sample_width_bits": 16,
+    "podonos_loudness_normalization": false,
+    "target_lufs": -23.0,
+    "true_peak_db": -1.0
+  },
+  "analysis": {
+    "bootstrap_replicates": 10000,
+    "seed": 20260825,
+    "preference_weighting": "equal_item",
+    "multiplicity": "Holm_four_competitors_per_benchmark",
+    "alpha_pilot_pooled": false
+  },
+  "evaluations": 17,
+  "total_judgments": 32450,
+  "jobs": [
+    {
+      "id": "alpha-pilot",
+      "benchmark": "alphabench",
+      "corpus": "data/pilot_alphabench_icc.jsonl",
+      "providers": [
+        "rime",
+        "openai",
+        "deepgram",
+        "cartesia",
+        "elevenlabs"
+      ],
+      "items": 90,
+      "ratings_per_item": 3,
+      "judgments": 1350
+    },
+    {
+      "id": "alpha-main",
+      "benchmark": "alphabench",
+      "corpus": "data/alphabench.jsonl",
+      "providers": [
+        "rime",
+        "openai",
+        "deepgram",
+        "cartesia",
+        "elevenlabs"
+      ],
+      "items": 580,
+      "ratings_per_item": 3,
+      "judgments": 8700
+    },
+    {
+      "id": "support-openai-tranche",
+      "benchmark": "supportbench",
+      "corpus": "data/tranche_supportbench.jsonl",
+      "providers": [
+        "rime",
+        "openai"
+      ],
+      "items": 120,
+      "ratings_per_item": 7,
+      "judgments": 840
+    },
+    {
+      "id": "support-openai-continuation",
+      "benchmark": "supportbench",
+      "corpus": "data/continuation_supportbench.jsonl",
+      "providers": [
+        "rime",
+        "openai"
+      ],
+      "items": 630,
+      "ratings_per_item": 3,
+      "judgments": 1890
+    },
+    {
+      "id": "support-deepgram-tranche",
+      "benchmark": "supportbench",
+      "corpus": "data/tranche_supportbench.jsonl",
+      "providers": [
+        "rime",
+        "deepgram"
+      ],
+      "items": 120,
+      "ratings_per_item": 7,
+      "judgments": 840
+    },
+    {
+      "id": "support-deepgram-continuation",
+      "benchmark": "supportbench",
+      "corpus": "data/continuation_supportbench.jsonl",
+      "providers": [
+        "rime",
+        "deepgram"
+      ],
+      "items": 630,
+      "ratings_per_item": 3,
+      "judgments": 1890
+    },
+    {
+      "id": "support-cartesia-tranche",
+      "benchmark": "supportbench",
+      "corpus": "data/tranche_supportbench.jsonl",
+      "providers": [
+        "rime",
+        "cartesia"
+      ],
+      "items": 120,
+      "ratings_per_item": 7,
+      "judgments": 840
+    },
+    {
+      "id": "support-cartesia-continuation",
+      "benchmark": "supportbench",
+      "corpus": "data/continuation_supportbench.jsonl",
+      "providers": [
+        "rime",
+        "cartesia"
+      ],
+      "items": 630,
+      "ratings_per_item": 3,
+      "judgments": 1890
+    },
+    {
+      "id": "support-elevenlabs-full",
+      "benchmark": "supportbench",
+      "corpus": "data/supportbench.jsonl",
+      "providers": [
+        "rime",
+        "elevenlabs"
+      ],
+      "items": 750,
+      "ratings_per_item": 7,
+      "judgments": 5250
+    },
+    {
+      "id": "content-openai-tranche",
+      "benchmark": "contentbench",
+      "corpus": "data/tranche_contentbench.jsonl",
+      "providers": [
+        "rime",
+        "openai"
+      ],
+      "items": 120,
+      "ratings_per_item": 7,
+      "judgments": 840
+    },
+    {
+      "id": "content-openai-continuation",
+      "benchmark": "contentbench",
+      "corpus": "data/continuation_contentbench.jsonl",
+      "providers": [
+        "rime",
+        "openai"
+      ],
+      "items": 280,
+      "ratings_per_item": 5,
+      "judgments": 1400
+    },
+    {
+      "id": "content-deepgram-tranche",
+      "benchmark": "contentbench",
+      "corpus": "data/tranche_contentbench.jsonl",
+      "providers": [
+        "rime",
+        "deepgram"
+      ],
+      "items": 120,
+      "ratings_per_item": 7,
+      "judgments": 840
+    },
+    {
+      "id": "content-deepgram-continuation",
+      "benchmark": "contentbench",
+      "corpus": "data/continuation_contentbench.jsonl",
+      "providers": [
+        "rime",
+        "deepgram"
+      ],
+      "items": 280,
+      "ratings_per_item": 5,
+      "judgments": 1400
+    },
+    {
+      "id": "content-cartesia-tranche",
+      "benchmark": "contentbench",
+      "corpus": "data/tranche_contentbench.jsonl",
+      "providers": [
+        "rime",
+        "cartesia"
+      ],
+      "items": 120,
+      "ratings_per_item": 7,
+      "judgments": 840
+    },
+    {
+      "id": "content-cartesia-continuation",
+      "benchmark": "contentbench",
+      "corpus": "data/continuation_contentbench.jsonl",
+      "providers": [
+        "rime",
+        "cartesia"
+      ],
+      "items": 280,
+      "ratings_per_item": 5,
+      "judgments": 1400
+    },
+    {
+      "id": "content-elevenlabs-tranche",
+      "benchmark": "contentbench",
+      "corpus": "data/tranche_contentbench.jsonl",
+      "providers": [
+        "rime",
+        "elevenlabs"
+      ],
+      "items": 120,
+      "ratings_per_item": 7,
+      "judgments": 840
+    },
+    {
+      "id": "content-elevenlabs-continuation",
+      "benchmark": "contentbench",
+      "corpus": "data/continuation_contentbench.jsonl",
+      "providers": [
+        "rime",
+        "elevenlabs"
+      ],
+      "items": 280,
+      "ratings_per_item": 5,
+      "judgments": 1400
+    }
+  ],
+  "freeze_date": "2026-09-12",
+  "freeze_kind": "specification"
+}

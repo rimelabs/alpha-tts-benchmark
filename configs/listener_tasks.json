@@ -1,0 +1,132 @@
+{
+  "freeze_date": "2026-09-12",
+  "task_version": "1.0.0",
+  "templates": {
+    "AlphaBench": {
+      "instructions": [
+        {
+          "type": "DO",
+          "instruction": "Wear headphones in a quiet place.",
+          "description": "Please wear headphones for the entire session, and make sure you are in a quiet place where you can keep your attention on the audio."
+        },
+        {
+          "type": "DO",
+          "instruction": "Check the complete script.",
+          "description": "Read the complete displayed script, listen to the complete clip, and follow along. Replay difficult words, letters, numbers, names, or entities before answering. In a spelling such as P-H-I-L-L-I-P, the hyphens are visual separators. The voice should say the letters, not the word dash."
+        },
+        {
+          "type": "DONT",
+          "instruction": "Don't judge the voice, judge the content.",
+          "description": "Accent, pacing, pitch, and speaking style are not reading errors. A pause, grouped digits, or an unspoken visual separator is not an error when every required character is clear exactly once and in order. Mark missing, extra, wrong, repeated, reordered, truncated, or ambiguous content."
+        }
+      ],
+      "questions": [
+        {
+          "type": "NON_SCORED",
+          "question": "Does this recording contain a reading error compared with the displayed script?",
+          "description": "Select Reading error if any required word, letter, number, name, or other entity is missing, added, wrong, repeated, out of order, cut off, or unclear. Select No reading error if all required content is conveyed correctly and unambiguously.",
+          "allow_multiple": false,
+          "options": [
+            {
+              "label_text": "No reading error"
+            },
+            {
+              "label_text": "Reading error"
+            }
+          ],
+          "order": 0
+        }
+      ],
+      "annotations": [
+        {
+          "type": "ANNOTATION",
+          "question": "If you marked Reading error, highlight what was read incorrectly.",
+          "description": "Highlight the affected script region. Start the note with one or more labels: [OMISSION], [SUBSTITUTION], [INSERTION], [REPETITION], [REORDERING], [EARLY_STOP], [SLURRED_OR_AMBIGUOUS], or [OTHER]. Then write the expected and heard content. If there was no functional reading error, write 'none'.",
+          "order": 1
+        }
+      ]
+    },
+    "SupportBench": {
+      "instructions": [
+        {
+          "type": "DO",
+          "instruction": "Wear headphones in a quiet place.",
+          "description": "Please wear headphones for the entire session, and make sure you are in a quiet place where you can keep your attention on the audio."
+        },
+        {
+          "type": "DO",
+          "instruction": "Listen to both clips completely before rating.",
+          "description": "Both recordings are intended to convey the same text. Play each one all the way through at least once. Replaying is encouraged."
+        },
+        {
+          "type": "DONT",
+          "instruction": "Don't adjust the volume.",
+          "description": "Please do not adjust the volume once it is set. Changing the volume level significantly affects the consistency of your task."
+        },
+        {
+          "type": "DONT",
+          "instruction": "Don't force a preference.",
+          "description": "If the two clips genuinely sound equally good, use the middle of the scale. Forced preferences add noise."
+        }
+      ],
+      "questions": [
+        {
+          "type": "COMPARISON",
+          "question": "Which recording would you prefer to hear during a customer-support call?",
+          "description": "Both recordings are intended to convey the same text. Imagine receiving this spoken response during a customer-support call. Consider the delivery as a whole: how easy it is to understand, how natural the speech sounds, and how well it fits the situation. Make one overall preference judgment.",
+          "scale": 5,
+          "related_model": "ALL",
+          "anchor_label": {
+            "title": "Customer-service quality",
+            "label_text": {
+              "left": "is much better",
+              "right": "is much better"
+            }
+          },
+          "order": 0
+        }
+      ]
+    },
+    "ContentBench": {
+      "instructions": [
+        {
+          "type": "DO",
+          "instruction": "Wear headphones in a quiet place.",
+          "description": "Please wear headphones for the entire session, and make sure you are in a quiet place where you can keep your attention on the audio."
+        },
+        {
+          "type": "DO",
+          "instruction": "Listen to both clips completely before rating.",
+          "description": "Both recordings are intended to convey the same text. Play each one all the way through at least once. Replaying is encouraged."
+        },
+        {
+          "type": "DONT",
+          "instruction": "Don't adjust the volume.",
+          "description": "Please do not adjust the volume once it is set. Changing the volume level significantly affects the consistency of your task."
+        },
+        {
+          "type": "DONT",
+          "instruction": "Don't force a preference.",
+          "description": "If the two clips genuinely sound equally good, use the middle of the scale. Forced preferences add noise."
+        }
+      ],
+      "questions": [
+        {
+          "type": "COMPARISON",
+          "question": "Which recording would you prefer for listening to this passage?",
+          "description": "Both recordings are intended to convey the same text. Imagine listening to this passage as narration. Consider the delivery as a whole: how easy it is to follow, how natural the speech sounds, and how well the pacing and expression fit the passage. Make one overall preference judgment.",
+          "scale": 5,
+          "related_model": "ALL",
+          "anchor_label": {
+            "title": "Content narration quality",
+            "label_text": {
+              "left": "is much better",
+              "right": "is much better"
+            }
+          },
+          "order": 0
+        }
+      ]
+    }
+  }
+}

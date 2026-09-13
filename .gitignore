@@ -1,0 +1,11 @@
+.venv/
+out/
+exports/
+run_registry/
+__pycache__/
+*.pyc
+*.sqlite3
+.env
+.env.*
+!.env.example
+.DS_Store
