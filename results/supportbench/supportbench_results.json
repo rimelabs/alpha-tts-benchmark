@@ -1,0 +1,114 @@
+{
+  "cartesia_sonic3_default": {
+    "items": 750,
+    "families": 286,
+    "kish_effective_families": 166.3217031342401,
+    "valid_judgments": 2730,
+    "mean_rime_minus_competitor": 0.20012698412698413,
+    "ci_95": [
+      0.11125929144015656,
+      0.2878765440207163
+    ],
+    "raw_cluster_sign_flip_p": 4.9999750001249995e-06,
+    "win_items": 383,
+    "tie_items": 104,
+    "loss_items": 263,
+    "win_item_rate": 0.5106666666666667,
+    "tie_item_rate": 0.13866666666666666,
+    "loss_item_rate": 0.3506666666666667,
+    "holm_p": 1.9999900000499998e-05,
+    "claim": {
+      "status": "rime_direction_supported",
+      "supported_direction": "rime",
+      "directional_claim_allowed": true,
+      "magnitude_bound_nearest_zero": 0.11125929144015656,
+      "magnitude_language_allowed": true,
+      "equivalence_or_parity_claim_allowed": false,
+      "causal_or_mechanistic_claim_allowed": false
+    }
+  },
+  "deepgram_aura2_thalia": {
+    "items": 750,
+    "families": 286,
+    "kish_effective_families": 166.3217031342401,
+    "valid_judgments": 2730,
+    "mean_rime_minus_competitor": 0.3681269841269841,
+    "ci_95": [
+      0.28517142579642585,
+      0.44896383784300775
+    ],
+    "raw_cluster_sign_flip_p": 4.9999750001249995e-06,
+    "win_items": 467,
+    "tie_items": 90,
+    "loss_items": 193,
+    "win_item_rate": 0.6226666666666667,
+    "tie_item_rate": 0.12,
+    "loss_item_rate": 0.25733333333333336,
+    "holm_p": 1.9999900000499998e-05,
+    "claim": {
+      "status": "rime_direction_supported",
+      "supported_direction": "rime",
+      "directional_claim_allowed": true,
+      "magnitude_bound_nearest_zero": 0.28517142579642585,
+      "magnitude_language_allowed": true,
+      "equivalence_or_parity_claim_allowed": false,
+      "causal_or_mechanistic_claim_allowed": false
+    }
+  },
+  "elevenlabs_flash25_cindycasualnarrator": {
+    "items": 750,
+    "families": 286,
+    "kish_effective_families": 166.3217031342401,
+    "valid_judgments": 5250,
+    "mean_rime_minus_competitor": 0.12171428571428572,
+    "ci_95": [
+      0.05131743523028237,
+      0.19729958068667744
+    ],
+    "raw_cluster_sign_flip_p": 0.00017999910000449998,
+    "win_items": 393,
+    "tie_items": 63,
+    "loss_items": 294,
+    "win_item_rate": 0.524,
+    "tie_item_rate": 0.084,
+    "loss_item_rate": 0.392,
+    "holm_p": 0.00017999910000449998,
+    "claim": {
+      "status": "rime_direction_supported",
+      "supported_direction": "rime",
+      "directional_claim_allowed": true,
+      "magnitude_bound_nearest_zero": 0.05131743523028237,
+      "magnitude_language_allowed": true,
+      "equivalence_or_parity_claim_allowed": false,
+      "causal_or_mechanistic_claim_allowed": false
+    }
+  },
+  "openai_4ominitts_coral": {
+    "items": 750,
+    "families": 286,
+    "kish_effective_families": 166.3217031342401,
+    "valid_judgments": 2730,
+    "mean_rime_minus_competitor": 0.9003809523809524,
+    "ci_95": [
+      0.832035521334575,
+      0.9685761501269902
+    ],
+    "raw_cluster_sign_flip_p": 4.9999750001249995e-06,
+    "win_items": 636,
+    "tie_items": 44,
+    "loss_items": 70,
+    "win_item_rate": 0.848,
+    "tie_item_rate": 0.058666666666666666,
+    "loss_item_rate": 0.09333333333333334,
+    "holm_p": 1.9999900000499998e-05,
+    "claim": {
+      "status": "rime_direction_supported",
+      "supported_direction": "rime",
+      "directional_claim_allowed": true,
+      "magnitude_bound_nearest_zero": 0.832035521334575,
+      "magnitude_language_allowed": true,
+      "equivalence_or_parity_claim_allowed": false,
+      "causal_or_mechanistic_claim_allowed": false
+    }
+  }
+}

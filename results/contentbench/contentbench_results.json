@@ -1,0 +1,162 @@
+{
+  "cartesia_sonic3_default": {
+    "items": 400,
+    "families": 223,
+    "kish_effective_families": 80.72653884964681,
+    "valid_judgments": 2240,
+    "mean_rime_minus_competitor": 0.20114285714285715,
+    "ci_95": [
+      0.11779971318671009,
+      0.2795102910026042
+    ],
+    "raw_cluster_sign_flip_p": 4.9999750001249995e-06,
+    "win_items": 232,
+    "tie_items": 41,
+    "loss_items": 127,
+    "win_item_rate": 0.58,
+    "tie_item_rate": 0.1025,
+    "loss_item_rate": 0.3175,
+    "sensitivity_coarse_dependency": {
+      "method": "cluster literature excerpts by author and other ContentBench items by genre",
+      "clusters": 24,
+      "kish_effective_clusters": 3.8294002201905126,
+      "mean_rime_minus_competitor": 0.20114285714285715,
+      "ci_95": [
+        0.12337019871945737,
+        0.3497844287692003
+      ],
+      "raw_cluster_sign_flip_p": 3.9999800000999996e-05,
+      "holm_p": 0.00015999920000399999
+    },
+    "holm_p": 1.9999900000499998e-05,
+    "claim": {
+      "status": "rime_direction_supported",
+      "supported_direction": "rime",
+      "directional_claim_allowed": true,
+      "magnitude_bound_nearest_zero": 0.11779971318671009,
+      "magnitude_language_allowed": true,
+      "equivalence_or_parity_claim_allowed": false,
+      "causal_or_mechanistic_claim_allowed": false
+    }
+  },
+  "deepgram_aura2_thalia": {
+    "items": 400,
+    "families": 223,
+    "kish_effective_families": 80.72653884964681,
+    "valid_judgments": 2240,
+    "mean_rime_minus_competitor": -0.1535,
+    "ci_95": [
+      -0.22904681052748962,
+      -0.07626862339138558
+    ],
+    "raw_cluster_sign_flip_p": 9.999950000249999e-06,
+    "win_items": 149,
+    "tie_items": 32,
+    "loss_items": 219,
+    "win_item_rate": 0.3725,
+    "tie_item_rate": 0.08,
+    "loss_item_rate": 0.5475,
+    "sensitivity_coarse_dependency": {
+      "method": "cluster literature excerpts by author and other ContentBench items by genre",
+      "clusters": 24,
+      "kish_effective_clusters": 3.8294002201905126,
+      "mean_rime_minus_competitor": -0.1535,
+      "ci_95": [
+        -0.27058161473229964,
+        -0.0706832736099873
+      ],
+      "raw_cluster_sign_flip_p": 0.0004649976750116249,
+      "holm_p": 0.0013949930250348748
+    },
+    "holm_p": 1.9999900000499998e-05,
+    "claim": {
+      "status": "competitor_direction_supported",
+      "supported_direction": "competitor",
+      "directional_claim_allowed": true,
+      "magnitude_bound_nearest_zero": -0.07626862339138558,
+      "magnitude_language_allowed": true,
+      "equivalence_or_parity_claim_allowed": false,
+      "causal_or_mechanistic_claim_allowed": false
+    }
+  },
+  "elevenlabs_flash25_cindycasualnarrator": {
+    "items": 400,
+    "families": 223,
+    "kish_effective_families": 80.72653884964681,
+    "valid_judgments": 2240,
+    "mean_rime_minus_competitor": -0.16414285714285715,
+    "ci_95": [
+      -0.2566065570569398,
+      -0.0714733199874512
+    ],
+    "raw_cluster_sign_flip_p": 0.00021499892500537497,
+    "win_items": 147,
+    "tie_items": 30,
+    "loss_items": 223,
+    "win_item_rate": 0.3675,
+    "tie_item_rate": 0.075,
+    "loss_item_rate": 0.5575,
+    "sensitivity_coarse_dependency": {
+      "method": "cluster literature excerpts by author and other ContentBench items by genre",
+      "clusters": 24,
+      "kish_effective_clusters": 3.8294002201905126,
+      "mean_rime_minus_competitor": -0.16414285714285715,
+      "ci_95": [
+        -0.3225831236520487,
+        -0.05964391516975455
+      ],
+      "raw_cluster_sign_flip_p": 0.0037249813750931246,
+      "holm_p": 0.007449962750186249
+    },
+    "holm_p": 0.00021499892500537497,
+    "claim": {
+      "status": "competitor_direction_supported",
+      "supported_direction": "competitor",
+      "directional_claim_allowed": true,
+      "magnitude_bound_nearest_zero": -0.0714733199874512,
+      "magnitude_language_allowed": true,
+      "equivalence_or_parity_claim_allowed": false,
+      "causal_or_mechanistic_claim_allowed": false
+    }
+  },
+  "openai_4ominitts_coral": {
+    "items": 400,
+    "families": 223,
+    "kish_effective_families": 80.72653884964681,
+    "valid_judgments": 2240,
+    "mean_rime_minus_competitor": 0.3105,
+    "ci_95": [
+      0.214678456344944,
+      0.4135489980900328
+    ],
+    "raw_cluster_sign_flip_p": 4.9999750001249995e-06,
+    "win_items": 243,
+    "tie_items": 28,
+    "loss_items": 129,
+    "win_item_rate": 0.6075,
+    "tie_item_rate": 0.07,
+    "loss_item_rate": 0.3225,
+    "sensitivity_coarse_dependency": {
+      "method": "cluster literature excerpts by author and other ContentBench items by genre",
+      "clusters": 24,
+      "kish_effective_clusters": 3.8294002201905126,
+      "mean_rime_minus_competitor": 0.3105,
+      "ci_95": [
+        0.005760449242827351,
+        0.4413041953407886
+      ],
+      "raw_cluster_sign_flip_p": 0.01932490337548312,
+      "holm_p": 0.01932490337548312
+    },
+    "holm_p": 1.9999900000499998e-05,
+    "claim": {
+      "status": "rime_direction_supported",
+      "supported_direction": "rime",
+      "directional_claim_allowed": true,
+      "magnitude_bound_nearest_zero": 0.214678456344944,
+      "magnitude_language_allowed": true,
+      "equivalence_or_parity_claim_allowed": false,
+      "causal_or_mechanistic_claim_allowed": false
+    }
+  }
+}
