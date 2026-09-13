@@ -1,0 +1,25 @@
+{
+  "title": "AlphaTTSBench: TTS benchmark framework and results",
+  "upload_type": "dataset",
+  "description": "Human-judged US-English TTS benchmark framework and numerical results. SupportBench and ContentBench report separate paired preferences; AlphaBench is qualitative. 31,100 main-study judgments and 1,350 separate Alpha pilot judgments. See LICENSING.md for exclusions and source attribution.",
+  "creators": [
+    {
+      "name": "Rime"
+    }
+  ],
+  "version": "1.0.0",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "keywords": [
+    "text-to-speech",
+    "benchmark",
+    "human evaluation"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/rimelabs/alpha-tts-benchmark",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

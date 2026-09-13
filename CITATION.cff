@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "Please cite this benchmark when using its framework or results."
+title: "AlphaTTSBench: TTS benchmark framework and results"
+type: dataset
+authors:
+  - name: "Rime"
+    website: "https://www.rime.ai/"
+version: 1.0.0
+url: "https://rime-speech-benchmarks.akzzz.chatgpt.site/"
+repository-code: "https://github.com/rimelabs/alpha-tts-benchmark"
+abstract: "Human-judged US-English TTS evaluation: contextual paired preferences for support and narration, and qualitative exact-identifier reading-error evidence."
+keywords:
+  - text-to-speech
+  - benchmark
+  - human evaluation
