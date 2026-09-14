@@ -5,7 +5,7 @@
   "sha256": {
     ".gitignore": "6c4b9990db3f41008dddeb7df348679fd9567dff8bb8449e2d25bdd46bf44aa5",
     "PROTOCOL.md": "8c622c1a9241b5b64836fbb4c132b4c88af016d8153589cbdf3f24290430a424",
-    "README.md": "02f8f8cc077d237bee1293d513190c6241eb965a92e1f45135154f19fe60abbf",
+    "README.md": "7e8b27e2a3c2f4949948c6fb17a718ddf3b86b7c9f0d5e45e3e27408318bf639",
     "configs/listener_tasks.json": "492fb6c885715b74f409b43d0e62f4f71af9e54d088bcfd87c7c7b71cf72c496",
     "configs/provider_configs.json": "7b5b3fcdd0f10550c50243e1236668cec3846413aca3924bffff5e77ed0f14bc",
     "configs/run_design.json": "1176892d179279b1129711c23624fae8e2c620cddc8420a61362117af50177c4",
@@ -33,6 +33,7 @@
     "data/supportbench.jsonl": "3bbb2fed4d66b5a8e7f4814882e54d657f71888d4d3cdb0f059b9ba49387a272",
     "data/tranche_contentbench.jsonl": "97bc5cb7575fa64bcf277a78b856d39e68e1399ac1f54682d8d0028bb1831019",
     "data/tranche_supportbench.jsonl": "73f59b489c5494b293376199cff579c9b3b52e9e7dbb398f82d28fb2255927f8",
+    "docs/framework-narrative.md": "6271b1f900fc87f83e70c5a18b23dc861cd0597c7c4e0895c131d167044059c1",
     "docs/frozen-run.md": "0772cab5157ac041c2b83e60e9dbeb0184585ce9a4aa51cab7a35570de5c76de",
     "docs/normalization-cases.md": "9377cbda80089bed135ffc1b62efb0f3f19d126523fbb84addfed67bce7e81f9",
     "docs/rater-instructions-cmos.md": "25f9101f541d19d2b71fd765a5097daf713175923a991e1fcda40cc178cc2168",
@@ -65,5 +66,14 @@
     "tests/test_submission_common.py": "12126210388628630cd0092d91ba41c6409bae83efe40aabcf061677f994bd62",
     "tests/test_synthesis.py": "d601d0f5f023bad7bd96a3a398ea75e3fc7fff3805d29d347296d79c4c96c1bb",
     "uv.lock": "3600313e203808ca0eba6db3a226eea67d8d10472a9858f9fa4c6c55f13ef2d6"
+  },
+  "documentation_revision": {
+    "date": "2026-09-14",
+    "base_specification_commit": "77bff1a2f2d50025a807b17ec70e62983dcc5895",
+    "scope": "Explanatory documentation only; methodology and results unchanged.",
+    "files": [
+      "README.md",
+      "docs/framework-narrative.md"
+    ]
   }
 }

@@ -1,5 +1,19 @@
 # Changelog
 
+## Documentation revision, September 14, 2026
+
+- Reworked the README to explain the three tasks, distinguish the framework from
+  the published run, summarize the findings and timeline, and guide reuse.
+- Added `docs/framework-narrative.md` with the reviewed development account and
+  design rationale. Linked the exports and results already in the repository.
+- Updated only the README hash and added the narrative hash in the manifest,
+  with explicit documentation-revision metadata. The original September 12
+  snapshot remains preserved at specification commit `77bff1a`.
+- No changes to corpora, tasks, provider settings, rating allocations, analysis,
+  tests, exports, or numerical results. This is explanatory documentation for
+  specification 1.0.0; it does not revise the methodological specification or
+  require reanalysis.
+
 ## 1.0.0
 
 - Frozen benchmark specification and analysis implementation: 77bff1a2f2d50025a807b17ec70e62983dcc5895.
