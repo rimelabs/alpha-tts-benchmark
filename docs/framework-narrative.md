@@ -1,8 +1,8 @@
-# AlphaTTSBench
+# TTSBench
 
 ## TL;DR
 
-**AlphaTTSBench is a human-listening framework for evaluating whether TTS systems
+**TTSBench is a human-listening framework for evaluating whether TTS systems
 read required content correctly and how listeners prefer their delivery in
 different contexts.** It contains three complementary tests: **AlphaBench**
 documents reading failures, **SupportBench** measures customer-support
@@ -57,7 +57,7 @@ correctness-first decision. Warmth and the desire to keep listening motivate the
 question; the task does not separately measure those qualities or whether a
 customer stays on a call.
 
-AlphaTTSBench gives each question its own task so the evidence can inform a
+TTSBench gives each question its own task so the evidence can inform a
 specific decision: investigate a reading failure, compare delivery for an
 application, or identify what needs further testing.
 
