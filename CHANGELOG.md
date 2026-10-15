@@ -1,5 +1,26 @@
 # Changelog
 
+## Documentation revision, October 15, 2026
+
+- Renamed the framework from AlphaTTSBench to TTSBench in the README, the
+  framework narrative, and citation metadata. The repository path, benchmark
+  names (AlphaBench, SupportBench, ContentBench), and specification version are
+  unchanged. The 1.0.0 release notes keep the name used at release.
+- Reworked the README to open with what the repository contains, the published
+  findings, what distinguishes the framework, and takeaways for builders,
+  followed by a guide that explains the three tasks, the statistics, the
+  published run, the development timeline, and reuse.
+- Added `docs/framework-narrative.md` with the reviewed development account and
+  design rationale. Linked the exports and results already in the repository.
+- Pointed the citation URL to the public results page.
+- Updated only the README and narrative hashes in the manifest, with explicit
+  documentation-revision metadata. The original September 12 snapshot remains
+  preserved at specification commit `77bff1a`.
+- No changes to corpora, tasks, provider settings, rating allocations, analysis,
+  tests, exports, or numerical results. This is explanatory documentation for
+  specification 1.0.0. It does not revise the methodological specification or
+  require reanalysis.
+
 ## 1.0.0
 
 - Frozen benchmark specification and analysis implementation: 77bff1a2f2d50025a807b17ec70e62983dcc5895.
