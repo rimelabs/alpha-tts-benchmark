@@ -11,9 +11,6 @@ provider settings, synthesis and collection scripts, analysis code,
 judgment-level listener exports, and reports. You can check every number below
 or run the same study on your own voices.
 
-TTSBench was first released as AlphaTTSBench with specification 1.0.0 in
-September 2026. Only the name has changed.
-
 [Results page](https://www.rime.ai/research/tts-benchmarks) · [Launch post](https://www.rime.ai/resources/a-better-set-of-benchmarks-for-text-to-speech) · [Full results](results/README.md) · [Framework narrative](docs/framework-narrative.md)
 
 ## At a glance
